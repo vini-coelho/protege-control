@@ -11,6 +11,8 @@ import {
 	FlatList
 } from 'react-native';
 
+import { onSignOut } from '../auth';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../styles/Colors';
@@ -19,26 +21,40 @@ import Header from '../components/Header';
 export default ({ navigation }) => {
 
 	const listData = [
-		{ id: Math.random().toString(), title: 'AVISOS', icon: 'notifications', color: Colors.yellow },
-		{ id: Math.random().toString(), title: 'Visitantes', icon: 'directions-walk', color: Colors.yellow },
-		{ id: Math.random().toString(), title: 'Mensagens', icon: 'mail', color: Colors.yellow },
-		{ id: Math.random().toString(), title: 'Ocorrências', icon: 'error', color: Colors.yellow },
-		{ id: Math.random().toString(), title: 'Arquivos', icon: 'folder', color: Colors.yellow },
-		{ id: Math.random().toString(), title: 'Avisos', icon: 'notifications', color: Colors.yellow },
+		{ id: Math.random().toString(), 
+			title: 'Avisos', 
+			icon: 'notifications', 
+			color: Colors.yellow,
+			to: 'Alerts',
+			description: 'Acompanhe o quadro de avisos da administração do seu condomínio'
+		},
+		{ id: Math.random().toString(), 
+			title: 'Visitantes', 
+			icon: 'directions-walk', 
+			color: Colors.yellow,
+			to: 'Visitors',
+			description: 'Avise a portaria que você está esperando visitas!'
+		},
+		// { id: Math.random().toString(), title: 'Mensagens', icon: 'mail', color: Colors.yellow },
+		// { id: Math.random().toString(), title: 'Ocorrências', icon: 'error', color: Colors.yellow },
+		// { id: Math.random().toString(), title: 'Arquivos', icon: 'folder', color: Colors.yellow },
 	]
 
 	return (
 		<View style={{ flex: 1, backgroundColor: Colors.main }}>
 			<StatusBar barStyle='dark-content' backgroundColor={Colors.yellow} />
+			
 			<Header onPressLeft={() => navigation.openDrawer()}
 			iconLeft='menu' 
-			iconRight='notifications' 
+			iconRight='cancel' 
+			onPressRight={async () => await onSignOut(navigation)}
 			title='PROTEGE CONTROL' />
+
 			<View style={styles.container}>
 				<View>
 					<FlatList contentContainerStyle={{ paddingBottom: 15}} data={listData}
 						renderItem={({ item }) => (
-							<TouchableOpacity onPress={() => navigation.navigate('Alerts')} style={styles.listItem} key={item.id}>
+							<TouchableOpacity onPress={() => navigation.navigate(`${item.to}`)} style={styles.listItem} key={item.id}>
 
 								<View style={styles.listItemIconContainer}>
 									<Icon size={30} name={item.icon} color={item.color} />
@@ -47,7 +63,7 @@ export default ({ navigation }) => {
 									<Text style={styles.listItemTitle}>{item.title}</Text>
 									<View style={{ flexDirection: 'row' }}>
 										<Text
-											style={styles.listItemDescription}>Acompanhe o quadro de avisos da administração do seu condomínio</Text>
+											style={styles.listItemDescription}>{item.description}</Text>
 									</View>
 								</View>
 

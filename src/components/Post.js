@@ -1,14 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../styles/Colors';
 
-export default ({ title, description }) => {
+export default ({ title, description, date }) => {
+
+    function formatedDate(stringDate){
+
+        const monthNames = [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", 
+        "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ];
+
+        const dt = new Date(stringDate),
+        dia  = dt.getUTCDate().toString(),
+        diaF = (dia.length == 1) ? '0'+dia : dia,
+        mes  = (dt.getUTCMonth()+1).toString(),
+        mesF = (mes.length == 1) ? '0'+mes : mes,
+        anoF = dt.getUTCFullYear();
+
+        return diaF+" de "+monthNames[dt.getMonth()]+" de "+anoF;
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.info}> 
-                <Text style={styles.date}>Manaus, 03 de Janeiro de 2020</Text>
+                <Text style={styles.date}>Manaus, {formatedDate(date)}</Text>
                 <View style={styles.iconsContainer}>
                     <Icon name='image' size={17} color={Colors.yellow}/>
                     <Icon name='attach-file' size={17} color={Colors.yellow}/>

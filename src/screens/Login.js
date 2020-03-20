@@ -1,29 +1,83 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    TextInput, 
+    Image, 
+    TouchableOpacity,
+    ActivityIndicator, 
+    Alert
+} from 'react-native';
 
-import Header from '../components/Header';
+import { logIn, setUser, setCond } from '../auth';
+
 import Logo from '../assets/images/logo.png'
 import Colors from '../styles/Colors';
+import api from '../services/api';
 
-export default () => {
+export default ({ navigation }) => {
+
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ loading, setLoading ] = useState(false);
+
+    const logUser = async () => {
+
+        setLoading(true);
+
+        const success = await logIn(email, password)
+        .catch(err => Alert('Erro', 'Não foi possível realizar seu login'));
+
+        if (success) {
+            const { data: user } = await api.get('/showuser'); 
+
+            const { data: userCond } = await api.get(`/condominiums/${user.cond_id}`); 
+
+            setUser(user);
+            setCond(userCond);
+
+            navigation.navigate('LoggedInAsUser');
+        }
+        
+        setLoading(false);
+
+    }
+
     return (
         <View style={styles.container}>
-            <View style={styles.image}>
-                <Image resizeMode='contain' source={Logo}/>
-            </View>
-            <Text style={styles.title}>PROTEGE CONTROL</Text>
-            <View style={styles.form}>
-                <TextInput placeholderTextColor={Colors.yellow}
-                style={styles.input} 
-                placeholder='E-mail'/>
+            { loading ?
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ActivityIndicator color={Colors.yellow} size='large' />
+                </View>
+                :
+                <>
+                    <View style={styles.image}>
+                        <Image resizeMode='contain' source={Logo}/>
+                    </View>
+                    <Text style={styles.title}>PROTEGE CONTROL</Text>
+                    <View style={styles.form}>
+                        <TextInput value={email}
+                        onChangeText={email => setEmail(email)} 
+                        placeholderTextColor={Colors.yellow}
+                        style={styles.input} 
+                        placeholder='E-mail'
+                        autoCapitalize='none'/>
 
-                <TextInput placeholderTextColor={Colors.yellow} 
-                style={styles.input} 
-                placeholder='Senha'
-                secureTextEntry/>
+                        <TextInput value={password}
+                        onChangeText={password => setPassword(password)}
+                        placeholderTextColor={Colors.yellow} 
+                        style={styles.input} 
+                        placeholder='Senha'
+                        autoCapitalize='none'
+                        secureTextEntry/>
 
-                <Text style={styles.button}>LOGIN</Text>
-            </View>
+                        <TouchableOpacity onPress={logUser}>
+                            <Text style={styles.button}>LOGIN</Text>
+                        </TouchableOpacity>
+                    </View>
+                </>
+            }       
         </View>
     );
 }
@@ -36,6 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
+        color: Colors.yellow,
         marginBottom: 10,
         borderBottomColor: Colors.yellow,
         borderBottomWidth: 1,
