@@ -19,6 +19,7 @@ export const logIn = async (email, password) => {
         return true;
     }
     catch(err) {
+        console.log(err);
         throw err;
     }
 }

@@ -9,7 +9,7 @@ import CustomDrawer from './styles/CustomDrawer';
 import Home from './screens/Home';
 import Posts from './screens/Posts';
 import Login from './screens/Login';
-import Visitors from './screens/Visitors';
+import Visitors from './screens/visitor/Visitors';
 
 const LoggedInAsUser = createDrawerNavigator({
     Home: {

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import Colors from '../styles/Colors';
 
-export default ({ name, type, date, comments, arrivedAt, leftAt, status }) => {
+export default ({ name, type, date, comments, arrivedAt, leftAt, status, car }) => {
 
     let typeText = '';
     let statusText = '';
@@ -51,7 +51,10 @@ export default ({ name, type, date, comments, arrivedAt, leftAt, status }) => {
                 </View> */}
                 <Text style={[styles.date, {color: Colors.yellow}]}>{typeText}</Text>
             </View>
-            <Text style={styles.title}>{name}</Text>
+            <View style={styles.info}>
+            <Text style={[styles.title, {maxWidth: 200}]}>{name}</Text>
+            {car && <Text style={styles.title}>placa: <Text style={styles.description}>{car}</Text></Text>}
+            </View>
             <Text style={styles.description}>{comments}</Text>
         </View>
     );

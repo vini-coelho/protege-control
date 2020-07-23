@@ -25,9 +25,7 @@ export default ({ navigation }) => {
     const logUser = async () => {
 
         setLoading(true);
-
-        const success = await logIn(email, password)
-        .catch(err => Alert('Erro', 'Não foi possível realizar seu login'));
+        const success = await logIn(email, password).catch(err => Alert('Erro', 'Não foi possível realizar seu login'));
 
         if (success) {
             const { data: user } = await api.get('/showuser'); 

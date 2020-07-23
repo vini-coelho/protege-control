@@ -24,7 +24,7 @@ export default props => {
     const [ date, setDate ] = useState(new Date());
     const [ type, setType ] = useState('visitor');
     const [ comments, setComments ] = useState('');
-
+    const [ car, setCar] = useState('')
     const [ pickerVisible, setPickerVisible ] = useState(false);
 
     const setDateInPicker = (dt) => {
@@ -39,7 +39,8 @@ export default props => {
             doc,
             date: moment(date).utc().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]"),
             type,
-            comments
+            comments,
+            car
         }).catch(err => { throw err; })
     }
 
@@ -52,13 +53,13 @@ export default props => {
                     <TextInput 
                     style={styles.input} 
                     onChangeText={name => setName(name)}
-                    placeholder='Nome do visitante'/>
+                    placeholder='Nome do visitante*'/>
 
                     <TextInput  
                     style={styles.input} 
                     keyboardType='number-pad'
                     onChangeText={doc => setDoc(doc)}
-                    placeholder='Número de RG'/>
+                    placeholder='Número de RG*'/>
 
                     <TouchableHighlight onPress={() => setPickerVisible(true)}>
                         <Text style={[styles.input, { paddingVertical: 13 }]}>
@@ -82,6 +83,11 @@ export default props => {
                             <Picker.Item label='Prestador de serviços' value={'service'}/>
                         </Picker>
                     </View>
+                    
+                    <TextInput  
+                    style={styles.input} 
+                    onChangeText={car => setCar(car)}
+                    placeholder='Placa do carro'/>
 
                     <TextInput  
                     style={styles.input} 
