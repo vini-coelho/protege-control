@@ -16,7 +16,7 @@ import api from '../../services/api';
 
 import Colors from '../../styles/Colors';
 
-import NewVisitor from '../NewVisitor'; 
+import NewVisitor from '../NewVisitor/NewVisitor'; 
 import Header from '../../components/Header';
 import VisitorCard from '../../components/VisitorCard';
 import { FilterButton, ButtonText, FilterContainer } from './styles';

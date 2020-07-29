@@ -10,11 +10,11 @@ import {
     Alert
 } from 'react-native';
 
-import { logIn, setUser, setCond } from '../auth';
+import { logIn, setUser, setCond } from '../../auth';
 
-import Logo from '../assets/images/logo.png'
-import Colors from '../styles/Colors';
-import api from '../services/api';
+import Logo from '../../assets/images/logo.png'
+import Colors from '../../styles/Colors';
+import api from '../../services/api';
 
 export default ({ navigation }) => {
 

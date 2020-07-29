@@ -4,6 +4,8 @@ import { DrawerItems } from 'react-navigation-drawer';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import Colors from '../styles/Colors';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { onSignOut } from '../auth';
 
 export default CustomDrawerContentComponent = props => {
 
@@ -22,6 +24,21 @@ export default CustomDrawerContentComponent = props => {
         getUser();
     }, []);
 
+
+    function mapUserType(type){
+        switch (type) {
+            case "user":
+                return "Morador"
+            case "admin":
+                return "Portaria"
+            case "root":
+                return "Admin"
+                
+            default:
+                return "Morador";
+        }
+    }
+
     return (
         (user && cond) &&
             <ScrollView>
@@ -36,13 +53,15 @@ export default CustomDrawerContentComponent = props => {
                             <View style={styles.profilePic}></View>
                             <View style={styles.info}>
                                 <Text style={styles.name}>{user.name}</Text>
-                                <Text style={styles.place}>{cond.name}</Text>
-                                <Text style={styles.place}>Ap. {user.apartment}, Torre {user.tower}</Text>
+                                <Text style={styles.place}>{mapUserType(user.type)}</Text>
                             </View>
                         </View>
                     </View>
                     {/* <Image style={styles.image} source={} /> */}
                     <DrawerItems {...props} />
+                    <TouchableOpacity onPress={async () => await onSignOut(props.navigation)}>
+                    <Text>Sair</Text>
+                    </TouchableOpacity>
                 </SafeAreaView>
             </ScrollView>
     );
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'Roboto-Light',
         textAlign: 'center',
-        color: Colors.main,
+        color: Colors.white,
         fontSize: 18,
         marginBottom: 20
     },
@@ -84,15 +103,19 @@ const styles = StyleSheet.create({
     },
     name: {
         fontFamily: 'Roboto-Bold',
-        fontSize: 17
+        fontSize: 17,
+        color:Colors.white
     },
     place: {
         marginTop: 2,
         fontFamily: 'Roboto-Light',
         fontSize: 12,
+        color:Colors.white
+
     },
     info: {
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        color:Colors.white
 
     },
     image: {

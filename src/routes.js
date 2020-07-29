@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from './styles/Colors';
 import CustomDrawer from './styles/CustomDrawer';
 
-import Home from './screens/Home';
-import Posts from './screens/Posts';
-import Login from './screens/Login';
+import Home from './screens/Home/Home';
+import Posts from './screens/Posts/Posts';
+import Login from './screens/Login/Login';
 import Visitors from './screens/visitor/Visitors';
 
 const LoggedInAsUser = createDrawerNavigator({
@@ -28,14 +28,6 @@ const LoggedInAsUser = createDrawerNavigator({
             <Icon name='notifications' size={25} color={tintColor}/>
         }
     },
-    // Documents: {
-    //     screen: ,
-    //     navigationOptions: {
-    //         title: 'Arquivos',
-    //         drawerIcon: ({ tintColor }) => 
-    //         <Icon name='folder' size={25} color={tintColor}/>
-    //     }
-    // },
     Visitors: {
         screen: Visitors,
         navigationOptions: {
@@ -43,33 +35,39 @@ const LoggedInAsUser = createDrawerNavigator({
             drawerIcon: ({ tintColor }) => 
             <Icon name='directions-walk' size={25} color={tintColor}/>
         }
-    }
+    },
+    CheckIn: {
+        screen: Visitors,
+        navigationOptions: {
+            title: 'Check-In',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='directions-walk' size={25} color={tintColor}/>
+        }
+    },
+    CheckOut: {
+        screen: Visitors,
+        navigationOptions: {
+            title: 'Check-Out',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='directions-walk' size={25} color={tintColor}/>
+        }
+    },
 }, {
     initialRouteName: 'Home',
     contentComponent: CustomDrawer,
-    drawerBackgroundColor: Colors.main,
+    drawerBackgroundColor: Colors.white,
     contentOptions: {
         labelStyle: {
-            fontFamily: 'Roboto-Thin',
+            fontFamily: 'Roboto',
             fontWeight: 'normal',
             fontSize: 17
         },
-        inactiveTintColor: Colors.yellow,
-        inactiveBackgroundColor: Colors.main,
-        activeTintColor: Colors.yellow,
-        activeBackgroundColor: Colors.light
+        inactiveTintColor: Colors.dark,
+        inactiveBackgroundColor: Colors.white,
+        activeTintColor: Colors.dark,
+        activeBackgroundColor: Colors.white
     }
 });
-
-// const LoggedOut = createSwitchNavigator({
-//     Login: {
-//         screen: Login
-//     }
-// });
-
-// const LoggedInAsRoot = createDrawerNavigator({});
-
-// const LoggedInAsAdmin = createDrawerNavigator({});
 
 export const createRootNavigator = (signedIn = false, userType) => {
     let initialRouteName = '';

@@ -7,12 +7,12 @@ import {
     ActivityIndicator 
 } from 'react-native';
 
-import Colors from '../styles/Colors';
+import Colors from '../../styles/Colors';
 
-import Header from '../components/Header';
-import Post from '../components/Post';
+import Header from '../../components/Header';
+import Post from '../../components/Post';
 
-import api from '../services/api';
+import api from '../../services/api';
 
 export default ({ navigation }) => {
 

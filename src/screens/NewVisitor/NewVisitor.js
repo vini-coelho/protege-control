@@ -13,9 +13,9 @@ import moment from 'moment';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import Colors from '../styles/Colors';
+import Colors from '../../styles/Colors';
 
-import Header from '../components/Header';
+import Header from '../../components/Header';
 
 export default props => {
 
