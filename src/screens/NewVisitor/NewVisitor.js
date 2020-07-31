@@ -16,6 +16,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Colors from '../../styles/Colors';
 
 import Header from '../../components/Header';
+import { CheckBoxLabelText, LabelText, SubmitButton, ButtonText, CheckBoxRow, CheckBoxGroup, Scroll, ContainerForm } from './styles';
+import Checkbox from '../../components/Checkbox/Checkbox';
 
 export default props => {
 
@@ -27,11 +29,16 @@ export default props => {
     const [ car, setCar] = useState('')
     const [ pickerVisible, setPickerVisible ] = useState(false);
 
+    const [isChecked, setIsChecked] = useState(false)
+
     const setDateInPicker = (dt) => {
         setPickerVisible(false);
         setDate(dt || date);
     }
 
+    const handleCheckBoxClick = (checked)=>{
+        if(!checked)setIsChecked(!isChecked)
+    }
     const submitForm = async () => {
         props.closeModal();
         await props.onSubmit({
@@ -46,60 +53,79 @@ export default props => {
 
     return(
         <Modal {...props}>
-                <Header title='Agendar visita'
-                iconLeft='close'
-                onPressLeft={props.closeModal}/>
-                <View style={styles.form}>
-                    <TextInput 
-                    style={styles.input} 
-                    onChangeText={name => setName(name)}
-                    placeholder='Nome do visitante*'/>
-
-                    <TextInput  
-                    style={styles.input} 
-                    keyboardType='number-pad'
-                    onChangeText={doc => setDoc(doc)}
-                    placeholder='Número de RG*'/>
-
-                    <TouchableHighlight onPress={() => setPickerVisible(true)}>
-                        <Text style={[styles.input, { paddingVertical: 13 }]}>
-                            Data da visita: {moment(date).format('DD/MM/YYYY')}
-                        </Text>
-                    </TouchableHighlight>
-
-                    { pickerVisible && <DateTimePicker value={date}
-                    mode='date'
-                    display='calendar'
-                    onTouchCancel={() => setDateInPicker(new Date())}
-                    onChange={(event, date) => setDateInPicker(date)}/> }
-
-                    <View style={ styles.input }>
-                        <Picker mode='dropdown'
-                        style={{ padding: 0, height: 30 }} 
-                        selectedValue={type}
-                        onValueChange={value => setType(value)}>
-                            <Picker.Item label='Visitante' value={'visitor'}/>
-                            <Picker.Item label='Entregas' value={'delivery'}/>
-                            <Picker.Item label='Prestador de serviços' value={'service'}/>
-                        </Picker>
-                    </View>
+            <Header title='Agendar visita'
+            iconLeft='arrow-back'
+            onPressLeft={props.closeModal}/>
+            <View style={styles.form}>
+                <Scroll>
+                    <ContainerForm>
+                        <View style={ styles.input }>
+                            <Picker mode='dropdown'
+                            style={{ padding: 0, height: 30 }} 
+                            selectedValue={type}
+                            onValueChange={value => setType(value)}>
+                                <Picker.Item label='Visitante' value={'visitor'}/>
+                                <Picker.Item label='Entregas' value={'delivery'}/>
+                                <Picker.Item label='Prestador de serviços' value={'service'}/>
+                            </Picker>
+                        </View>
                     
-                    <TextInput  
-                    style={styles.input} 
-                    onChangeText={car => setCar(car)}
-                    placeholder='Placa do carro'/>
+                        <LabelText>Nome</LabelText>
+                        <TextInput 
+                        style={styles.input} 
+                        onChangeText={name => setName(name)}/>
 
-                    <TextInput  
-                    style={styles.input} 
-                    onChangeText={com => setComments(com)}
-                    placeholder='Comentários'
-                    multiline={true}
-                    numberOfLines={3}/>
+                        <LabelText>Documento</LabelText>
+                        <TextInput  
+                        style={styles.input} 
+                        keyboardType='number-pad'
+                        onChangeText={doc => setDoc(doc)}/>
+                        
+                        <LabelText>Possui veículo?</LabelText>
+                        <CheckBoxRow>
+                            <CheckBoxGroup>
+                                <Checkbox checked={isChecked} onPress={checked=>handleCheckBoxClick(checked)} preventDefault={true}/>
+                                <CheckBoxLabelText>SIM</CheckBoxLabelText>
+                            </CheckBoxGroup>
+                            <CheckBoxGroup>
+                                <Checkbox checked={!isChecked} onPress={checked=>handleCheckBoxClick(checked)} preventDefault={true}/>
+                                <CheckBoxLabelText>NÃO</CheckBoxLabelText>
+                            </CheckBoxGroup>
+                        </CheckBoxRow>
 
-                    <TouchableOpacity onPress={submitForm}>
-                        <Text style={styles.button}>AGENDAR VISITA</Text>
-                    </TouchableOpacity>
-                </View>
+                        {isChecked && 
+                            <> 
+                                <LabelText>Placa</LabelText>
+                                <TextInput  
+                                style={styles.input} 
+                                onChangeText={car => setCar(car)}/>
+                            </>}
+
+                        <TouchableHighlight onPress={() => setPickerVisible(true)}>
+                            <Text style={[styles.input, { paddingVertical: 13 }]}>
+                                Data da visita: {moment(date).format('DD/MM/YYYY')}
+                            </Text>
+                        </TouchableHighlight>
+
+                        { pickerVisible && <DateTimePicker value={date}
+                        mode='date'
+                        display='calendar'
+                        onTouchCancel={() => setDateInPicker(new Date())}
+                        onChange={(event, date) => setDateInPicker(date)}/> }
+                        
+                        <LabelText>Descrição</LabelText>
+                        <TextInput  
+                        style={styles.input} 
+                        onChangeText={com => setComments(com)}
+                        multiline={true}
+                        numberOfLines={3}/>
+
+                        <SubmitButton onPress={submitForm}>
+                            <ButtonText>Salvar</ButtonText>
+                        </SubmitButton>
+                    </ContainerForm>
+                </Scroll>
+            </View>
         </Modal>
     );
 }
@@ -107,13 +133,15 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: Colors.lightGray,
         padding: 10,
         justifyContent: 'center'
     },
     input: {
         marginBottom: 10,
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.white,
+        borderWidth:1,
+        borderColor: Colors.light,
         borderRadius: 5,
         padding: 10,
         fontFamily: 'Roboto',
@@ -121,8 +149,7 @@ const styles = StyleSheet.create({
     },
     form: {
         flex: 1,
-        backgroundColor: Colors.light,
-        padding: 20,
+        backgroundColor: Colors.lightGray,
         shadowColor: "#000",
 		shadowOffset: {
 			width: 0,

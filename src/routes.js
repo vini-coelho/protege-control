@@ -10,6 +10,15 @@ import Home from './screens/Home/Home';
 import Posts from './screens/Posts/Posts';
 import Login from './screens/Login/Login';
 import Visitors from './screens/visitor/Visitors';
+import { createStackNavigator } from 'react-navigation-stack';
+
+export const VisitorStack = createStackNavigator({
+    Visitors:  {
+        screen: Visitors,
+        navigationOptions:{
+            header: null
+        }},
+})
 
 const LoggedInAsUser = createDrawerNavigator({
     Home: {
@@ -29,7 +38,7 @@ const LoggedInAsUser = createDrawerNavigator({
         }
     },
     Visitors: {
-        screen: Visitors,
+        screen: VisitorStack,
         navigationOptions: {
             title: 'Visitantes',
             drawerIcon: ({ tintColor }) => 
@@ -68,6 +77,7 @@ const LoggedInAsUser = createDrawerNavigator({
         activeBackgroundColor: Colors.white
     }
 });
+
 
 export const createRootNavigator = (signedIn = false, userType) => {
     let initialRouteName = '';

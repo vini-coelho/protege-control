@@ -19,7 +19,7 @@ import Colors from '../../styles/Colors';
 import NewVisitor from '../NewVisitor/NewVisitor'; 
 import Header from '../../components/Header';
 import VisitorCard from '../../components/VisitorCard';
-import { FilterButton, ButtonText, FilterContainer } from './styles';
+import { FilterButton, ButtonText, FilterContainer, RowContainer, VisitorText, TextWrapper, ListHeaderText,ListHeaderContainer } from './styles';
 
 export default ({ navigation }) => {
 
@@ -28,10 +28,10 @@ export default ({ navigation }) => {
     const [ loading, setLoading ] = useState(false);
     const [ newVisitorVisible, setNewVisitorVisible ] = useState(false);
     const [ refresh, setRefresh ] = useState(false);
-    const [filterSelected, setFilterSelected] = useState(null)
+    const [filterSelected, setFilterSelected] = useState("visitor")
     function onFilterClick(type) {
         console.log(`${type} != ${filterSelected} == ${type!=filterSelected}`);
-        setFilterSelected(type!=filterSelected? type : null)
+        setFilterSelected(type!=filterSelected? type : filterSelected)
     }
     function filterVisitors(type) {
         console.log(type)
@@ -51,8 +51,8 @@ export default ({ navigation }) => {
             setRefresh(false);
             setLoading(true);
             try{
-                const response = await api.get(`/visitorbyhost`);
-                setVisitors(response.data);
+                const response = await api.get(`/visitorbycond`);
+                setVisitors(response.data.filter(visitor => visitor.type == filterSelected));
                 _setVisitors(response.data)
             }
             catch(err) {
@@ -80,7 +80,7 @@ export default ({ navigation }) => {
 
     return (
         <>
-            <StatusBar barStyle='dark-content' backgroundColor={Colors.yellow}/>
+            <StatusBar barStyle='dark-content' backgroundColor={Colors.main}/>
 
             <NewVisitor animationType='slide' 
             visible={newVisitorVisible}
@@ -91,9 +91,9 @@ export default ({ navigation }) => {
             <View style={styles.container}>
                 <Header iconRight='add'
                 onPressRight={() => setNewVisitorVisible(true)}
-                iconLeft='menu'
-                onPressLeft={() => navigation.openDrawer()}
-                title='Visitantes'/>
+                iconLeft='arrow-back' 
+                onPressLeft={() => navigation.navigate(`Home`)}
+                title='Visitas'/>
 
                 { loading ?
                     <View style={{ flex: 1, justifyContent: 'center' }}> 
@@ -101,28 +101,45 @@ export default ({ navigation }) => {
                     </View>
                     : <>
                         <FilterContainer>
-                            <FilterButton theme={filterSelected=="delivery"?Colors.light:Colors.main} onPress = {()=>onFilterClick("delivery")} key="delivery">
-                                <ButtonText>Entrega</ButtonText></FilterButton>
-                            <FilterButton theme={filterSelected=="visitor"?Colors.light:Colors.main} onPress = {()=>onFilterClick("visitor")}  key="visitor">
-                                <ButtonText>Visita</ButtonText></FilterButton>
-                            <FilterButton theme={filterSelected=="service"?Colors.light:Colors.main} onPress = {()=>onFilterClick("service")}  key="service">
-                                <ButtonText>Serviço</ButtonText></FilterButton>
+                            <FilterButton theme={filterSelected=="delivery"?Colors.yellow:Colors.white} onPress = {()=>onFilterClick("delivery")} key="delivery">
+                                <ButtonText isSelected={filterSelected=="delivery"}>Entrega</ButtonText></FilterButton>
+                            <FilterButton theme={filterSelected=="visitor"?Colors.yellow:Colors.white} onPress = {()=>onFilterClick("visitor")}  key="visitor">
+                                <ButtonText isSelected={filterSelected=="visitor"}>Visita</ButtonText></FilterButton>
+                            <FilterButton theme={filterSelected=="service"?Colors.yellow:Colors.white} onPress = {()=>onFilterClick("service")}  key="service">
+                                <ButtonText isSelected={filterSelected=="service"}>Serviço</ButtonText></FilterButton>
                         </FilterContainer>
+                        <ListHeaderContainer>
+                            <RowContainer>
+                                    <TextWrapper width={`32%`}>
+                                        <ListHeaderText >Nome</ListHeaderText>
+                                    </TextWrapper>
+                                    <TextWrapper width={`15%`}>
+                                        <ListHeaderText>AP/CS</ListHeaderText>
+                                    </TextWrapper>
+                                    <TextWrapper width={`25%`}>
+                                        <ListHeaderText>Responsável</ListHeaderText>
+                                    </TextWrapper>
+                            </RowContainer>
+                        </ListHeaderContainer>
                         <FlatList onRefresh={() => setRefresh(true)} 
                         refreshing={refresh}
                         contentContainerStyle={styles.list} 
                         data={visitors}
                         keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => (
-                            <VisitorCard name={item.name}
-                            date={item.date}
-                            type={item.type}
-                            comments={item.comments}
-                            status={item.status}
-                            arrivedAt={item.arrived_at}
-                            leftAt={item.left_at}
-                            car={item.car}
-                            />
+
+                            <RowContainer>
+                                <TextWrapper width={`32%`}>
+                                    <VisitorText >{item.name}</VisitorText>
+                                </TextWrapper>
+                               <TextWrapper width={`15%`}>
+                               { (!!item.user.tower || !!item.user.apartment) && 
+                                    <VisitorText>{`${item.user.tower}/${item.user.apartment}`}</VisitorText>
+                               }</TextWrapper>
+                                <TextWrapper width={`25%`}>
+                                    <VisitorText>{item.user.name}</VisitorText>
+                                </TextWrapper>
+                            </RowContainer>
                         )}/>
                     </>
                 }
@@ -135,11 +152,12 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.main,
+        backgroundColor: Colors.white,
     },
     list: {
         // flex: 1,
-        padding: 10,
+        padding: 20,
+        paddingTop: 0,
         paddingBottom: 0,
     },
     title: {
