@@ -13,7 +13,6 @@ export const USER_COND = 'USER_COND';
 export const logIn = async (email, password) => {
     try {
         const response = await api.post('/authenticate', { email, password });
-
         await AsyncStorage.setItem(USER_TOKEN, response.data.token);
 
         return true;

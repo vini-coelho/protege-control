@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	View,
 	Text,
@@ -7,7 +7,7 @@ import {
 	FlatList
 } from 'react-native';
 
-import { onSignOut } from '../../auth';
+import { onSignOut, getUser } from '../../auth';
 
 
 import Colors from '../../styles/Colors';
@@ -18,6 +18,8 @@ import HomeHeader from '../../components/HomeHeader';
 import HomeNotification from '../../components/HomeNotification';
 
 export default ({ navigation }) => {
+
+	const [user,setUser] = useState(null)
 
 	const listData = [
 		{ id: Math.random().toString(), 
@@ -37,6 +39,21 @@ export default ({ navigation }) => {
 			to: 'Visitors',
 		},
 	]
+
+	const formatAddress = ()=>{
+		let str = `${user?.condominium?.street||" - "}`;
+		if(user?.condominium?.street) str += `, ${user?.condominium?.number}`
+		if(user?.condominium?.neighborhood) str += ` - ${user?.condominium?.neighborhood}`
+		return str
+	}
+
+	useEffect(()=>{
+		const findUser= async () => {
+			const _user = await getUser()
+			setUser(_user)
+		}
+		findUser()
+	},[])
 
 	return (
 		<View style={{ flex: 1, backgroundColor: Colors.main }}>
@@ -67,9 +84,9 @@ export default ({ navigation }) => {
 				<HomeNotification onPress={()=>navigation.navigate(`Alerts`)} numberText={1}></HomeNotification>
 			</NotificationRow>
 			<CondominumContainer>
-				<CondominumNameText>Condomínio Vila Flores</CondominumNameText>
+				<CondominumNameText>{user?.condominium?.name||""}</CondominumNameText>
 				<LineView/>
-				<CondominumAddressText>Rua Acre, 1337 - Cachoeirinha</CondominumAddressText>
+				<CondominumAddressText>{formatAddress()}</CondominumAddressText>
 				<ChangeCondominiumButton><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>
 			</CondominumContainer>
 		</View>
