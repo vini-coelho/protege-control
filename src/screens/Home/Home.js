@@ -22,7 +22,7 @@ export default ({ navigation }) => {
 	const listData = [
 		{ id: Math.random().toString(), 
 			title: 'Moradores', 
-			to: 'Alerts',
+			to: 'Dwellers',
 		},
 		{ id: Math.random().toString(), 
 			title: 'Avisos', 

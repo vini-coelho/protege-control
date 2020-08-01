@@ -11,6 +11,7 @@ import Posts from './screens/Posts/Posts';
 import Login from './screens/Login/Login';
 import Visitors from './screens/visitor/Visitors';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Dwellers } from './screens/Dwellers';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -35,6 +36,14 @@ const LoggedInAsUser = createDrawerNavigator({
             title: 'Avisos',
             drawerIcon: ({ tintColor }) => 
             <Icon name='notifications' size={25} color={tintColor}/>
+        }
+    },
+    Dwellers: {
+        screen: Dwellers,
+        navigationOptions: {
+            title: 'Moradores',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='person' size={25} color={tintColor}/>
         }
     },
     Visitors: {
