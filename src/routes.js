@@ -16,7 +16,7 @@ export const VisitorStack = createStackNavigator({
     Visitors:  {
         screen: Visitors,
         navigationOptions:{
-            header: null
+            headerShown: false
         }},
 })
 

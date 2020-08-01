@@ -20,6 +20,7 @@ import NewVisitor from '../NewVisitor/NewVisitor';
 import Header from '../../components/Header';
 import VisitorCard from '../../components/VisitorCard';
 import { FilterButton, ButtonText, FilterContainer, RowContainer, VisitorText, TextWrapper, ListHeaderText,ListHeaderContainer } from './styles';
+import { getUser } from '../../auth';
 
 export default ({ navigation }) => {
 
@@ -78,6 +79,20 @@ export default ({ navigation }) => {
         }
     }
 
+    const listDewllers = async () => {
+        setLoading(true);
+        const user = await getUser()
+        try {
+            return await api.get(`/getDewllers/${user.cond_id}`)
+            .then((res) => {
+                setLoading(false);
+                return res.data;
+            })
+        } catch (err) {
+            Alert.alert('Erro', 'Não foi possível listar moradores.')
+        }
+    }
+
     return (
         <>
             <StatusBar barStyle='dark-content' backgroundColor={Colors.main}/>
@@ -86,7 +101,8 @@ export default ({ navigation }) => {
             visible={newVisitorVisible}
             onRequestClose={() => setNewVisitorVisible(false)}
             closeModal={() => setNewVisitorVisible(false)}
-            onSubmit={storeVisitor}/>
+            onSubmit={storeVisitor}
+            listDewllers={listDewllers}/>
 
             <View style={styles.container}>
                 <Header iconRight='add'

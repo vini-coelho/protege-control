@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     View, 
     StyleSheet, 
@@ -28,6 +28,16 @@ export default props => {
     const [ comments, setComments ] = useState('');
     const [ car, setCar] = useState('')
     const [ pickerVisible, setPickerVisible ] = useState(false);
+    const [responsible, setResponsible] = useState(null)
+    const [dwellers, setDwellers] = useState([])
+    useEffect(()=>{
+        const getDwellers = async ()=>{
+            const _dwellers = await props.listDewllers()
+            console.log(_dwellers);
+            setDwellers(_dwellers)
+        }
+        getDwellers()
+    },[])
 
     const [isChecked, setIsChecked] = useState(false)
 
@@ -120,6 +130,21 @@ export default props => {
                         multiline={true}
                         numberOfLines={3}/>
 
+                        <LabelText>Responsável</LabelText>
+                        <View style={ styles.input }>
+                            <Picker mode='dropdown'
+                            style={{ padding: 0, height: 30 }} 
+                            onValueChange={value => setResponsible(value)}>
+                                {dwellers?.map( (s, i) => {
+                                        return <Picker.Item key={i} value={s} label={s.name} />
+                                    })}
+                            </Picker>
+                        </View>
+
+                        <LabelText>Apartamento</LabelText>
+                        <View style={ styles.input }>
+                            <Text>{responsible?`${responsible.tower}/${responsible.apartment}`:''}</Text>
+                        </View>
                         <SubmitButton onPress={submitForm}>
                             <ButtonText>Salvar</ButtonText>
                         </SubmitButton>
