@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import Colors from '../../styles/Colors';
 
 export const Container = styled.View`
-  
+  height: 100%;
 `;
 
 export const FAB = styled.TouchableOpacity`
@@ -13,7 +13,7 @@ export const FAB = styled.TouchableOpacity`
     align-items:center;
     background-color: ${Colors.main};
     position: absolute;
-    bottom: 150px;
+    bottom: 100px;
     right: 16px;
     z-index:100;
 `;
