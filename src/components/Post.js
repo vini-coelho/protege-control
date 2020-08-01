@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../styles/Colors';
 
-export default ({ title, description, date }) => {
+export default ({ title, description,senderName, date }) => {
 
     function formatedDate(stringDate){
 
@@ -22,37 +22,48 @@ export default ({ title, description, date }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.info}> 
-                <Text style={styles.date}>Manaus, {formatedDate(date)}</Text>
-                <View style={styles.iconsContainer}>
-                    <Icon name='image' size={17} color={Colors.yellow}/>
-                    <Icon name='attach-file' size={17} color={Colors.yellow}/>
+        <TouchableOpacity style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>{title}</Text>
+                <View style={styles.info}>
+                    <View style={{flexDirection:'row'}}>
+                    <Text style={styles.commomText}>Por: </Text> 
+                    <Text style={styles.sender}>{senderName}</Text>
+                    </View>
+                    <Text style={styles.date}>Manaus, {formatedDate(date)}</Text>
                 </View>
             </View>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description}>{description}</Text>
-        </View>
+            <View style={styles.body}>
+                <Text style={styles.commomText}>{description}</Text>
+            </View>
+        </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.light,
-        padding: 15,
-        borderRadius: 5,
+        backgroundColor: Colors.white,
+        borderRadius: 15,
         marginBottom: 10
+    },
+    header:{
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.gray,
+    },
+    body:{
+        padding: 15,
     },
     title: {
         fontSize: 20,
-        fontFamily: 'Roboto-Light',
-        color: Colors.yellow,
+        fontFamily: 'Roboto-Bold',
+        color: Colors.dark,
         marginBottom: 5
     },
-    description: {
+    commomText: {
         fontSize: 15,
-        fontFamily: 'Roboto-Light',
-        color: '#fff',
+        fontFamily: 'Roboto',
+        color: Colors.main,
         textAlign: 'justify'
     },
     info: {
@@ -62,10 +73,17 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     date: {
-        color: '#fff',
-        fontFamily: 'Roboto-Thin',
+        color: Colors.yellow,
+        fontFamily: 'Roboto',
     },
     iconsContainer: {
         flexDirection: 'row',
-    }
+    },
+    sender: {
+        fontSize: 15,
+        fontFamily: 'Roboto-Bold',
+        color: Colors.dark,
+        maxWidth: 200,
+    },
+
 });

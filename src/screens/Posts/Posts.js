@@ -26,6 +26,7 @@ export default ({ navigation }) => {
             setLoading(true);
             try{
                 const response = await api.get('/postsbycond');
+                console.log(response.data);
                 setPosts(response.data);
             }
             catch(err) {
@@ -41,8 +42,8 @@ export default ({ navigation }) => {
         <View style={styles.screen}>
             <Header 
             // iconRight='add'
-            iconLeft='menu'
-            onPressLeft={() => navigation.openDrawer()}
+            iconLeft='arrow-back'
+            onPressLeft={() => navigation.goBack()}
             title='Avisos'/>
             <View style={{ flex: 1 }}>
 
@@ -58,7 +59,9 @@ export default ({ navigation }) => {
                     renderItem={({ item }) => (
                         <Post title={item.title}
                         date={item.created_at.split(' ').join('T')}
-                        description={item.content}/>
+                        description={item.content}
+                        senderName={item?.sender?.name||"Protege"}
+                        />
                     )}/>
                 }
                     
@@ -70,7 +73,7 @@ export default ({ navigation }) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: Colors.main,
+        backgroundColor: Colors.light,
     },
     scroll: {
         flex: 1,
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     },
     list: {
         // flex: 1,
-        padding: 10,
+        padding: 20,
         paddingBottom: 0,
     },
 });
