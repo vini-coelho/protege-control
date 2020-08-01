@@ -33,7 +33,6 @@ export default props => {
     useEffect(()=>{
         const getDwellers = async ()=>{
             const _dwellers = await props.listDewllers()
-            console.log(_dwellers);
             setDwellers(_dwellers)
         }
         getDwellers()

@@ -26,7 +26,6 @@ export default ({ navigation }) => {
             setLoading(true);
             try{
                 const response = await api.get('/postsbycond');
-                console.log(response.data);
                 setPosts(response.data);
             }
             catch(err) {

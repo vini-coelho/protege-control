@@ -31,11 +31,9 @@ export default ({ navigation }) => {
     const [ refresh, setRefresh ] = useState(false);
     const [filterSelected, setFilterSelected] = useState("visitor")
     function onFilterClick(type) {
-        console.log(`${type} != ${filterSelected} == ${type!=filterSelected}`);
         setFilterSelected(type!=filterSelected? type : filterSelected)
     }
     function filterVisitors(type) {
-        console.log(type)
         if (type != null) {
             const filteredVisitors = _visitors.filter(visitor => visitor.type == type)
             setVisitors(filteredVisitors)
