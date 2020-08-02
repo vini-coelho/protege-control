@@ -16,11 +16,12 @@ import HomeMenuItem from '../../components/HomeMenuItem';
 import { MenuContainer, ItemView, CondominumContainer, CondominumNameText, CondominumAddressText, LineView, NotificationRow, ChangeCondominiumButton, ButtonText } from './styles';
 import HomeHeader from '../../components/HomeHeader';
 import HomeNotification from '../../components/HomeNotification';
+import { ROOT } from '../../utils/UserTypes';
 
 export default ({ navigation }) => {
 
 	const [user,setUser] = useState(null)
-
+	const [number, setNumber] = useState(0)
 	const listData = [
 		{ id: Math.random().toString(), 
 			title: 'Moradores', 
@@ -36,7 +37,7 @@ export default ({ navigation }) => {
 		},
 		{ id: Math.random().toString(), 
 			title: 'Falar com a Protege', 
-			to: 'Visitors',
+			to: 'Alerts',
 		},
 	]
 
@@ -81,13 +82,14 @@ export default ({ navigation }) => {
 
 			</MenuContainer>
 			<NotificationRow>
-				<HomeNotification onPress={()=>navigation.navigate(`Alerts`)} numberText={1}></HomeNotification>
+				<HomeNotification onPress={()=>navigation.navigate(`Alerts`)} numberText={number}></HomeNotification>
 			</NotificationRow>
 			<CondominumContainer>
 				<CondominumNameText>{user?.condominium?.name||""}</CondominumNameText>
 				<LineView/>
 				<CondominumAddressText>{formatAddress()}</CondominumAddressText>
-				<ChangeCondominiumButton><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>
+				{user?.type == ROOT &&
+					<ChangeCondominiumButton onPress={()=>{}}><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>}
 			</CondominumContainer>
 		</View>
 

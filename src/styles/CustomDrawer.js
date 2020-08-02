@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import { DrawerItems } from 'react-navigation-drawer';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../styles/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -58,10 +59,13 @@ export default CustomDrawerContentComponent = props => {
                         </View>
                     </View>
                     {/* <Image style={styles.image} source={} /> */}
-                    <DrawerItems {...props} />
-                    <TouchableOpacity onPress={async () => await onSignOut(props.navigation)}>
-                    <Text>Sair</Text>
-                    </TouchableOpacity>
+                    <View style={styles.body}>
+                        <DrawerItems {...props} />
+                        <TouchableOpacity style={styles.logoutContainer} onPress={async () => await onSignOut(props.navigation)}>
+                            <Icon name='exit-to-app' size={25} color={Colors.light}></Icon>
+                            <Text style={styles.logoutText}>Sair</Text>
+                        </TouchableOpacity>
+                    </View>
                 </SafeAreaView>
             </ScrollView>
     );
@@ -69,7 +73,7 @@ export default CustomDrawerContentComponent = props => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: '100%',
     },
     image: {
         maxWidth: 300,
@@ -122,5 +126,20 @@ const styles = StyleSheet.create({
         height: 120,
         width: 120,
         resizeMode: 'contain'
+    },
+    body:{
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    logoutContainer: {
+        padding: 20,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    logoutText: {
+        fontFamily: 'Roboto',
+            fontWeight: 'normal',
+            fontSize: 17,
+            marginLeft: 30
     }
 });

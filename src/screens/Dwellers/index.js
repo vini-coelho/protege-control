@@ -8,6 +8,7 @@ import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getUser } from '../../auth';
 import api from '../../services/api';
+import { ROOT } from '../../utils/UserTypes';
 
 const Dwellers = ({navigation}) => {
 
@@ -85,9 +86,10 @@ const Dwellers = ({navigation}) => {
                 address={`${item.tower}/${item.apartment}`}
                 ></DwellerCard>)
             }/>
-            <FAB>
-                <Icon name='add' size={30} color={Colors.yellow}></Icon>
-            </FAB>
+            {user?.type == ROOT &&
+                <FAB>
+                    <Icon name='add' size={30} color={Colors.yellow}></Icon>
+                </FAB>}
         </Container>}
 </>
   );

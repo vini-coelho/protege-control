@@ -54,22 +54,22 @@ const LoggedInAsUser = createDrawerNavigator({
             <Icon name='directions-walk' size={25} color={tintColor}/>
         }
     },
-    CheckIn: {
-        screen: Visitors,
-        navigationOptions: {
-            title: 'Check-In',
-            drawerIcon: ({ tintColor }) => 
-            <Icon name='directions-walk' size={25} color={tintColor}/>
-        }
-    },
-    CheckOut: {
-        screen: Visitors,
-        navigationOptions: {
-            title: 'Check-Out',
-            drawerIcon: ({ tintColor }) => 
-            <Icon name='directions-walk' size={25} color={tintColor}/>
-        }
-    },
+    // CheckIn: {
+    //     screen: Visitors,
+    //     navigationOptions: {
+    //         title: 'Check-In',
+    //         drawerIcon: ({ tintColor }) => 
+    //         <Icon name='directions-walk' size={25} color={tintColor}/>
+    //     }
+    // },
+    // CheckOut: {
+    //     screen: Visitors,
+    //     navigationOptions: {
+    //         title: 'Check-Out',
+    //         drawerIcon: ({ tintColor }) => 
+    //         <Icon name='directions-walk' size={25} color={tintColor}/>
+    //     }
+    // },
 }, {
     initialRouteName: 'Home',
     contentComponent: CustomDrawer,
