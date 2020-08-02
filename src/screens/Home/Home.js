@@ -17,6 +17,7 @@ import { MenuContainer, ItemView, CondominumContainer, CondominumNameText, Condo
 import HomeHeader from '../../components/HomeHeader';
 import HomeNotification from '../../components/HomeNotification';
 import { ROOT } from '../../utils/UserTypes';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default ({ navigation }) => {
 
@@ -57,7 +58,7 @@ export default ({ navigation }) => {
 	},[])
 
 	return (
-		<View style={{ flex: 1, backgroundColor: Colors.main }}>
+		<ScrollView style={{ flex: 1, backgroundColor: Colors.main }}>
 			
 			<HomeHeader onPressLeft={() => navigation.openDrawer()}
 			iconLeft='subject' 
@@ -91,7 +92,7 @@ export default ({ navigation }) => {
 				{user?.type == ROOT &&
 					<ChangeCondominiumButton onPress={()=>{}}><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>}
 			</CondominumContainer>
-		</View>
+		</ScrollView>
 
 	)
 };

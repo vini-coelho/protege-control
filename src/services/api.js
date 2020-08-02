@@ -1,9 +1,9 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
-// var url = 'https://protege-control-backend.herokuapp.com'
-const url = 'http://127.0.0.1:3333'
-// const url = 'http://142.11.215.48:4231'
+// var url = 'https://protege-control-backend.herokuapp.com' //test
+// const url = 'http://127.0.0.1:3333'// local
+const url = 'http://142.11.215.48:4231' //release
 const api = axios.create({
     baseURL: url
 });

@@ -44,6 +44,7 @@ export const NotificationRow = styled.View`
 
 export const ItemView = styled.View`
     margin: 10px;
+    width: 45%;
 `;
 
 export const ChangeCondominiumButton = styled.TouchableOpacity`

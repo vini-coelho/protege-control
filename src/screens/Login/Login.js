@@ -31,7 +31,7 @@ export default ({ navigation }) => {
             const { data: user } = await api.get('/showuser'); 
 
             const { data: userCond } = await api.get(`/condominiums/${user.cond_id}`); 
-
+            console.log(user);
             setUser(user);
             setCond(userCond);
 

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import Colors from '../../styles/Colors';
 
 export const Container = styled.TouchableOpacity`
-    width: 160px;
+    width: 100%;
     height: 100px;
     border-radius: 5px;
     background-color: ${Colors.gray};
