@@ -63,11 +63,12 @@ const Dwellers = ({navigation}) => {
   return(
 <>
     <StatusBar barStyle='dark-content' backgroundColor={Colors.main}/>
-    <Header iconRight='search'
-                onPressRight={() => {}}
-                iconLeft='arrow-back' 
-                onPressLeft={() => navigation.navigate(`Home`)}
-                title='Moradores'/>
+    <Header
+        // iconRight='search'
+        // onPressRight={() => {}}
+        iconLeft='arrow-back' 
+        onPressLeft={() => navigation.navigate(`Home`)}
+        title='Moradores'/>
     {loading ?
         <View style={{ flex: 1, justifyContent: 'center' }}>
             <ActivityIndicator color={Colors.yellow} size='large' />

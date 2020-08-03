@@ -36,10 +36,10 @@ export default ({ navigation }) => {
 			title: 'Visitas', 
 			to: 'Visitors',
 		},
-		{ id: Math.random().toString(), 
-			title: 'Falar com a Protege', 
-			to: 'Alerts',
-		},
+		// { id: Math.random().toString(), 
+		// 	title: 'Falar com a Protege', 
+		// 	to: 'Alerts',
+		// },
 	]
 
 	const formatAddress = ()=>{
