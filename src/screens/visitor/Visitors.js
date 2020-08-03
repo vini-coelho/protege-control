@@ -30,9 +30,11 @@ export default ({ navigation }) => {
     const [ newVisitorVisible, setNewVisitorVisible ] = useState(false);
     const [ refresh, setRefresh ] = useState(false);
     const [filterSelected, setFilterSelected] = useState("visitor")
+  
     function onFilterClick(type) {
         setFilterSelected(type!=filterSelected? type : filterSelected)
     }
+ 
     function filterVisitors(type) {
         if (type != null) {
             const filteredVisitors = _visitors.filter(visitor => visitor.type == type)
@@ -45,6 +47,7 @@ export default ({ navigation }) => {
     useEffect(()=>{
         filterVisitors(filterSelected)
     },[filterSelected])
+   
     useEffect(() => {
         async function getVisitors() {
             setRefresh(false);
@@ -66,6 +69,7 @@ export default ({ navigation }) => {
     const storeVisitor = async data => {
         setLoading(true);
         try {
+            console.log(data);
             await api.post('/visitors', data)
             .then(() => {
                 setLoading(false);
@@ -73,6 +77,8 @@ export default ({ navigation }) => {
             })
             .then(() => setRefresh(true))
         } catch (err) {
+            console.log(err);
+            setLoading(false);
             Alert.alert('Erro', 'Não foi possível agendar a visita.')
         }
     }

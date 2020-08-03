@@ -18,6 +18,8 @@ import Colors from '../../styles/Colors';
 import Header from '../../components/Header';
 import { CheckBoxLabelText, LabelText, SubmitButton, ButtonText, CheckBoxRow, CheckBoxGroup, Scroll, ContainerForm } from './styles';
 import Checkbox from '../../components/Checkbox/Checkbox';
+import { getUser } from '../../auth';
+import { USER } from '../../utils/UserTypes';
 
 export default props => {
 
@@ -27,35 +29,58 @@ export default props => {
     const [ type, setType ] = useState('visitor');
     const [ comments, setComments ] = useState('');
     const [ car, setCar] = useState('')
-    const [ pickerVisible, setPickerVisible ] = useState(false);
     const [responsible, setResponsible] = useState(null)
     const [dwellers, setDwellers] = useState([])
+    
+    const [ pickerVisible, setPickerVisible ] = useState(false);
+    const [user, setUser] = useState(null)
+    const [isChecked, setIsChecked] = useState(false)
+    
     useEffect(()=>{
         const getDwellers = async ()=>{
             const _dwellers = await props.listDewllers()
+            setResponsible(_dwellers[0])
             setDwellers(_dwellers)
         }
+        const _getUser = async () => {
+            const _user = await getUser()
+            setUser(_user)
+        }
+        _getUser()
         getDwellers()
     },[])
 
-    const [isChecked, setIsChecked] = useState(false)
 
     const setDateInPicker = (dt) => {
         setPickerVisible(false);
         setDate(dt || date);
     }
 
+    const clearStates = () =>{
+        setName('')
+        setDoc('')
+        setDate(new Date())
+        setType('visitor')
+        setComments('')
+        setCar('')
+    }
+
     const handleCheckBoxClick = (checked)=>{
         if(!checked)setIsChecked(!isChecked)
     }
+
     const submitForm = async () => {
+        clearStates()
         props.closeModal();
+        const hosted_by = user?.type != USER ? responsible.id : undefined
+
         await props.onSubmit({
             name,
             doc,
             date: moment(date).utc().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]"),
             type,
             comments,
+            hosted_by,
             car
         }).catch(err => { throw err; })
     }
@@ -88,6 +113,7 @@ export default props => {
                         <TextInput  
                         style={styles.input} 
                         keyboardType='number-pad'
+                        placeholder='RG ou CPF'
                         onChangeText={doc => setDoc(doc)}/>
                         
                         <LabelText>Possui veículo?</LabelText>
@@ -129,10 +155,12 @@ export default props => {
                         multiline={true}
                         numberOfLines={3}/>
 
+                      {user?.type != USER && <>
                         <LabelText>Responsável</LabelText>
                         <View style={ styles.input }>
                             <Picker mode='dropdown'
                             style={{ padding: 0, height: 30 }} 
+                            selectedValue={responsible}
                             onValueChange={value => setResponsible(value)}>
                                 {dwellers?.map( (s, i) => {
                                         return <Picker.Item key={i} value={s} label={s.name} />
@@ -144,6 +172,7 @@ export default props => {
                         <View style={ styles.input }>
                             <Text>{responsible?`${responsible.tower}/${responsible.apartment}`:''}</Text>
                         </View>
+                      </>}
                         <SubmitButton onPress={submitForm}>
                             <ButtonText>Salvar</ButtonText>
                         </SubmitButton>
