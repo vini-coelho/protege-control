@@ -12,6 +12,7 @@ import Login from './screens/Login/Login';
 import Visitors from './screens/visitor/Visitors';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Dwellers } from './screens/Dwellers';
+import { NewDweller } from './screens/NewDweller';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -20,6 +21,20 @@ export const VisitorStack = createStackNavigator({
             headerShown: false
         }},
 })
+
+export const DwellerStack = createStackNavigator({
+    Dwellers:  {
+        screen: Dwellers,
+        navigationOptions:{
+            headerShown: false
+        }},
+    NewDweller: {
+        screen: NewDweller,
+        navigationOptions:{
+            headerShown: false
+        }}
+})
+
 
 const LoggedInAsUser = createDrawerNavigator({
     Home: {
@@ -39,7 +54,7 @@ const LoggedInAsUser = createDrawerNavigator({
         }
     },
     Dwellers: {
-        screen: Dwellers,
+        screen: DwellerStack,
         navigationOptions: {
             title: 'Moradores',
             drawerIcon: ({ tintColor }) => 

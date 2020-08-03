@@ -88,7 +88,7 @@ const Dwellers = ({navigation}) => {
                 ></DwellerCard>)
             }/>
             {user?.type != USER &&
-                <FAB>
+                <FAB onPress={() => navigation.navigate(`NewDweller`)}>
                     <Icon name='add' size={30} color={Colors.yellow}></Icon>
                 </FAB>}
         </Container>}
