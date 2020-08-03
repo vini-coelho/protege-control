@@ -13,6 +13,7 @@ import Visitors from './screens/visitor/Visitors';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Dwellers } from './screens/Dwellers';
 import { NewDweller } from './screens/NewDweller';
+import { UpdatePassword } from './screens/UpdatePassword';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -103,12 +104,13 @@ const LoggedInAsUser = createDrawerNavigator({
 });
 
 
-export const createRootNavigator = (signedIn = false, userType) => {
+export const createRootNavigator = (signedIn = false, userType, firstLogin=false) => {
     let initialRouteName = '';
-
+    console.log(`firstLogin: ${firstLogin}`);
     if (signedIn === false) initialRouteName = 'LoggedOut';
     else {
-        if (userType === 'root') initialRouteName = 'LoggedInAsRoot';
+        if(firstLogin === true) initialRouteName = 'UpdatePassword';
+        else if (userType === 'root') initialRouteName = 'LoggedInAsRoot';
         else if (userType === 'admin') initialRouteName = 'LoggedInAsAdmin';
         else initialRouteName = 'LoggedInAsUser';
     }
@@ -117,7 +119,8 @@ export const createRootNavigator = (signedIn = false, userType) => {
         // LoggedInAsAdmin,
         // LoggedInAsRoot,
         LoggedInAsUser,
-        LoggedOut: Login
+        LoggedOut: Login,
+        UpdatePassword: UpdatePassword
     },
     {
         initialRouteName

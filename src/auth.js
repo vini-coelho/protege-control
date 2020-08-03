@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import jwtDecode from 'jwt-decode'
 
 import api from './services/api';
+import { JwtParse } from './utils/JwtParse';
 
 export const USER_TOKEN = 'USER_TOKEN';
 /**
@@ -26,6 +28,13 @@ export const logIn = async (email, password) => {
 /** Grava no Async Storage as informações do condominio do usuário */
 export const setCond = async (cond) => {
     await AsyncStorage.setItem(USER_COND, JSON.stringify(cond));
+}
+
+export const getDecriptedToken = async () => {
+    const token = await AsyncStorage.getItem(USER_TOKEN)
+    const  userInfo = jwtDecode(token)
+    console.log(token);
+    return userInfo
 }
 
 /** Grava no Async Storage as informações do usuário */

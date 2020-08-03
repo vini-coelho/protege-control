@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { View, ActivityIndicator, StatusBar } from 'react-native';
 
-import { getUser, isLoggedIn  } from './auth';
+import { getUser, isLoggedIn, getDecriptedToken  } from './auth';
 import { createRootNavigator } from './routes';
 
 import Colors from './styles/Colors';
@@ -9,13 +9,16 @@ import Colors from './styles/Colors';
 export default () => {
     const [ loggedIn, setLoggedIn ] = useState(false);
     const [ userType, setUserType ] = useState('');
+    const [ firstLogin, setFirstLogin ] = useState(false);
     const [ loading, setLoading ] = useState(true);
 
     useEffect(() => {
         const setLogin = async () => {
 
             setLoggedIn(await isLoggedIn());
-
+            const userInfo = await getDecriptedToken()
+            setFirstLogin(userInfo?.data?.isFirstLogin)
+            console.log(`userInfo: ${userInfo?.data?.isFirstLogin}`);
             if (loggedIn) 
             {
                 const user = await getUser();
@@ -28,7 +31,7 @@ export default () => {
         setLogin();
     }, []);
 
-    const App = createRootNavigator(loggedIn, userType);
+    const App = createRootNavigator(loggedIn, userType, firstLogin);
 
     return (
         <View style={{ flex: 1 }}>

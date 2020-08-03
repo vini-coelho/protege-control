@@ -20,7 +20,7 @@ const NewDweller = ({navigation}) => {
     const [apartment, setApartment] = useState('')
     const [cpf, setCpf] = useState('')
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    // const [password, setPassword] = useState('')
     // const [confirmPassword, setConfirmPassword] = useState('')
 
     function setupLabel (condType){
@@ -53,7 +53,7 @@ const NewDweller = ({navigation}) => {
             apartment,
             cpf: cpf.replace(/[.,\-\s]/g,''),
             email,
-            password,
+            password: cpf.replace(/[.,\-\s]/g,''),
             cond_id: user.cond_id,
             type: USER
         }
@@ -111,9 +111,9 @@ const NewDweller = ({navigation}) => {
                 <LabelText>E-mail</LabelText>
                 <Input 
                     onChangeText={value => setEmail(value)}></Input>
-                <LabelText>Senha</LabelText>
+                {/* <LabelText>Senha</LabelText>
                 <Input onChangeText={value => setPassword(value)}></Input>
-                {/* <LabelText>Confirmar Senha</LabelText>
+                <LabelText>Confirmar Senha</LabelText>
                 <Input onChangeText={value => setConfirmPassword(value)}></Input> */}
                 <SubmitButton onPress={onSubmit}>
                     <ButtonText>Salvar</ButtonText>
