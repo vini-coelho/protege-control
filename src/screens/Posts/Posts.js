@@ -37,12 +37,17 @@ export default ({ navigation }) => {
         getPosts();
     }, [refresh]);
 
+
+    const onItemClick= item => {
+        navigation.navigate("AlertsDetail", {item: item})
+    }
+
     return (
         <View style={styles.screen}>
             <Header 
             // iconRight='add'
             iconLeft='arrow-back'
-            onPressLeft={() => navigation.goBack()}
+            onPressLeft={() => navigation.navigate(`Home`)}
             title='Avisos'/>
             <View style={{ flex: 1 }}>
 
@@ -60,6 +65,7 @@ export default ({ navigation }) => {
                         date={item.created_at.split(' ').join('T')}
                         description={item.content}
                         senderName={item?.sender?.name||"Protege"}
+                        onItemClick={() => onItemClick(item)}
                         />
                     )}/>
                 }

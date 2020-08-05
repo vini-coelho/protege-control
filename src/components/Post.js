@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../styles/Colors';
 
-export default ({ title, description,senderName, date }) => {
+export default ({ title, description,senderName, date, onItemClick, onButtonClick }) => {
 
     function formatedDate(stringDate){
 
@@ -22,7 +22,7 @@ export default ({ title, description,senderName, date }) => {
     }
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onItemClick}>
             <View style={styles.header}>
                 <Text style={styles.title}>{title}</Text>
                 <View style={styles.info}>
@@ -36,6 +36,9 @@ export default ({ title, description,senderName, date }) => {
             <View style={styles.body}>
                 <Text style={styles.commomText}>{description}</Text>
             </View>
+            {onButtonClick && <>
+                <TouchableOpacity style={styles.button} onPress={onButtonClick}><Text style={styles.buttonText}>Responder</Text></TouchableOpacity>
+            </>}
         </TouchableOpacity>
     );
 }
@@ -85,5 +88,20 @@ const styles = StyleSheet.create({
         color: Colors.dark,
         maxWidth: 200,
     },
+    button: {
+        alignSelf: 'center',
+        backgroundColor: Colors.yellow,
+        color: Colors.white,
+        padding: 5,
+        borderRadius:5,
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginBottom: 15
+    },
+    buttonText: {
+        fontFamily: 'Roboto-Bold',
+        fontSize: 15,
+        color: Colors.white
+    }
 
 });

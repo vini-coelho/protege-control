@@ -14,6 +14,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { Dwellers } from './screens/Dwellers';
 import { NewDweller } from './screens/NewDweller';
 import { UpdatePassword } from './screens/UpdatePassword';
+import { PostDetail } from './screens/PostDetail';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -36,6 +37,18 @@ export const DwellerStack = createStackNavigator({
         }}
 })
 
+export const PostStack = createStackNavigator({
+    Alerts:  {
+        screen: Posts,
+        navigationOptions:{
+            headerShown: false
+        }},
+    AlertsDetail: {
+        screen: PostDetail,
+        navigationOptions:{
+            headerShown: false
+        }}
+})
 
 const LoggedInAsUser = createDrawerNavigator({
     Home: {
@@ -47,7 +60,7 @@ const LoggedInAsUser = createDrawerNavigator({
         }
     },
     Alerts: {
-        screen: Posts,
+        screen: PostStack,
         navigationOptions: {
             title: 'Avisos',
             drawerIcon: ({ tintColor }) => 
