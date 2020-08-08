@@ -16,6 +16,8 @@ import { NewDweller } from './screens/NewDweller';
 import { UpdatePassword } from './screens/UpdatePassword';
 import { PostDetail } from './screens/PostDetail';
 import { NewPost } from './screens/NewPost';
+import { CheckIn } from './screens/CheckIn';
+import { NewCheckIn } from './screens/NewCheckIn';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -56,6 +58,20 @@ export const PostStack = createStackNavigator({
         }}
 })
 
+export const CheckInStack = createStackNavigator({
+    CheckIn:  {
+        screen: CheckIn,
+        navigationOptions:{
+            headerShown: false
+        }},
+    NewCheckIn: {
+        screen: NewCheckIn,
+        navigationOptions:{
+            headerShown: false
+        }}
+})
+
+
 const LoggedInAsUser = createDrawerNavigator({
     Home: {
         screen: Home,
@@ -89,14 +105,14 @@ const LoggedInAsUser = createDrawerNavigator({
             <Icon name='directions-walk' size={25} color={tintColor}/>
         }
     },
-    // CheckIn: {
-    //     screen: Visitors,
-    //     navigationOptions: {
-    //         title: 'Check-In',
-    //         drawerIcon: ({ tintColor }) => 
-    //         <Icon name='directions-walk' size={25} color={tintColor}/>
-    //     }
-    // },
+    CheckIn: {
+        screen: CheckInStack,
+        navigationOptions: {
+            title: 'Check-In',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='directions-walk' size={25} color={tintColor}/>
+        }
+    },
     // CheckOut: {
     //     screen: Visitors,
     //     navigationOptions: {
