@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Alert, ActivityIndicator } from 'react-native';
 import { Scroll, ContainerForm, LabelText, Input, SubmitButton, ButtonText } from './styles';
-import { getUser } from '../../auth';
+import { getUser, getCond } from '../../auth';
 import Header from '../../components/Header';
 import { USER } from '../../utils/UserTypes';
 import api from '../../services/api';
@@ -10,7 +10,7 @@ import Colors from '../../styles/Colors';
 
 const NewDweller = ({navigation}) => {
 
-    const [user, setUser] = useState(null)
+    const [cond, setCond] = useState(null)
     const [loading, setLoading] = useState(false)
     const [towerLabel, setToweLabel] = useState('')
     const [apLabel, setApLabel] = useState('')
@@ -54,7 +54,7 @@ const NewDweller = ({navigation}) => {
             cpf: cpf.replace(/[.,\-\s]/g,''),
             email,
             password: cpf.replace(/[.,\-\s]/g,''),
-            cond_id: user.cond_id,
+            cond_id: cond.id,
             type: USER
         }
     }
@@ -76,9 +76,9 @@ const NewDweller = ({navigation}) => {
 
     useEffect(()=>{
         const findUser = async () =>{
-            const _user = await getUser()
-            setUser(_user)
-            setupLabel(_user.condominium.type)
+            const _cond = await getCond()
+            setCond(_cond)
+            setupLabel(_cond?.type)
         }
         findUser()
     },[])

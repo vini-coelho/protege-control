@@ -25,20 +25,21 @@ export default ({ navigation }) => {
     const logUser = async () => {
 
         setLoading(true);
-        const success = await logIn(email, password).catch(err => Alert('Erro', 'Não foi possível realizar seu login'));
+        const success = await logIn(email, password).catch(err => handleError());
 
-        if (success) {
+        if (success.status ==200) {
             const { data: user } = await api.get('/showuser'); 
 
-            const { data: userCond } = await api.get(`/condominiums/${user.cond_id}`); 
             setUser(user);
-            setCond(userCond);
-
+            setLoading(false);
             navigation.navigate('LoggedInAsUser');
-        }
+        } else { handleError() }
         
-        setLoading(false);
+    }
 
+    const handleError = () => {
+        setLoading(false);
+        Alert.alert('Erro', 'Não foi possível realizar seu login')
     }
 
     return (

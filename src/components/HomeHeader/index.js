@@ -1,19 +1,18 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AppBarPhoto from '../../assets/images/AppBarPhoto.png'
 
 import Colors from '../../styles/Colors';
 import {  MenuText } from './styles';
 
-export default ({ iconLeft, iconRight, title, onPressLeft, onPressRight }) => {
+export default ({ iconLeft, iconRight, title, onPressLeft, onPressRight, image }) => {
 	return (
 		<View style={styles.header}>
 			<TouchableOpacity onPress={onPressLeft} style={styles.iconContainer}>
 				<Icon name={iconLeft} size={35} color={Colors.yellow} />
 			</TouchableOpacity>
 			<MenuText>Menu</MenuText>
-			    <Image source={AppBarPhoto} style={{position:"relative", height:140, width:320}}/>
+			    <Image source={image} style={{position:"relative", height:140, width:320}}/>
 
 		</View>
 	)

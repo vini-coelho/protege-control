@@ -14,10 +14,12 @@ export const USER_COND = 'USER_COND';
 
 export const logIn = async (email, password) => {
     try {
-        const response = await api.post('/authenticate', { email, password });
-        await AsyncStorage.setItem(USER_TOKEN, response.data.token);
+        const response = await api.post('/authenticate', { email, password })
+        console.log(`status: ${response.status}`);
+        if(response.status == 200)
+            await AsyncStorage.setItem(USER_TOKEN, response.data.token);
 
-        return true;
+        return response;
     }
     catch(err) {
         console.log(err);
@@ -29,12 +31,20 @@ export const logIn = async (email, password) => {
 export const setCond = async (cond) => {
     await AsyncStorage.setItem(USER_COND, JSON.stringify(cond));
 }
-
+export const getCond = async () => {
+    const cond = await AsyncStorage.getItem(USER_COND);
+    console.log(cond);
+    return JSON.parse(cond)
+}
 export const getDecriptedToken = async () => {
     const token = await AsyncStorage.getItem(USER_TOKEN)
-    const  userInfo = jwtDecode(token)
-    console.log(token);
-    return userInfo
+    if(token) {
+        const  userInfo = jwtDecode(token)
+        console.log(token);
+        return userInfo
+    }
+
+    return null
 }
 
 /** Grava no Async Storage as informações do usuário */

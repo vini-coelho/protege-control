@@ -17,8 +17,10 @@ export default () => {
 
             setLoggedIn(await isLoggedIn());
             const userInfo = await getDecriptedToken()
-            setFirstLogin(userInfo?.data?.isFirstLogin)
-            console.log(`userInfo: ${userInfo?.data?.isFirstLogin}`);
+            if(userInfo) {
+                setFirstLogin(userInfo?.data?.isFirstLogin)
+                console.log(`userInfo: ${userInfo?.data?.isFirstLogin}`);
+            }
             if (loggedIn) 
             {
                 const user = await getUser();

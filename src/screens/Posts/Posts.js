@@ -11,6 +11,7 @@ import Colors from '../../styles/Colors';
 
 import Header from '../../components/Header';
 import Post from '../../components/Post';
+import { getUser, getCond } from '../../auth';
 
 import api from '../../services/api';
 
@@ -25,7 +26,8 @@ export default ({ navigation }) => {
             setRefresh(false);
             setLoading(true);
             try{
-                const response = await api.get('/postsbycond');
+                const {id: cond_id} = await getCond()
+                const response = await api.get('/postsbycond/'+cond_id);
                 setPosts(response.data);
             }
             catch(err) {

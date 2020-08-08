@@ -25,6 +25,8 @@ export const CondominumNameText = styled.Text`
 export const CondominumAddressText = styled.Text`
     font-family: "Roboto-Light";
     font-size: 14px;
+    max-width: 80%;
+    text-align: center;
     color: ${Colors.gray};
 `;
 

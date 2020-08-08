@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, FlatList, ActivityIndicator } from 'react-native';
+import { View, StatusBar, FlatList, ActivityIndicator, Alert } from 'react-native';
 
 import { Container, FAB, CondRow, CondText } from './styles';
 import DwellerCard from '../../components/DwellerCard';
 import Header from '../../components/Header';
 import Colors from '../../styles/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { getUser } from '../../auth';
+import { getUser, getCond } from '../../auth';
 import api from '../../services/api';
 import {  USER } from '../../utils/UserTypes';
 
@@ -15,6 +15,7 @@ const Dwellers = ({navigation}) => {
     const [loading, setLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState(null)
+	const [condominium, setCondominium] = useState(null)
     const [dwellers, setDwellers] = useState([])
 
     const data = [
@@ -35,20 +36,26 @@ const Dwellers = ({navigation}) => {
         const findUser= async () => {
 			const _user = await getUser()
             setUser(_user)
-            listDewllers(_user)
+            setupCond(_user?.condominium)
+            listDewllers(_user?.condominium)
 		}
         findUser()
     },[])
 
+    function setupCond (cond) {
+        if (cond) setCondominium(cond)
+        else getCond().then(data => setCondominium(data))
+    }
+
     useEffect(()=>{
-        if (user) listDewllers(user)
+        if (condominium) listDewllers(condominium)
     },[refresh])
 
-    const listDewllers = async (_user) => {
+    const listDewllers = async (cond) => {
         setLoading(true);
         setRefresh(false)
         try {
-            const _dwellers = await api.get(`/getDewllers/${_user.cond_id}`)
+            const _dwellers = await api.get(`/getDewllers/${cond.id}`)
             .then((res) => {
                 setLoading(false);
                 return res.data;
@@ -75,7 +82,7 @@ const Dwellers = ({navigation}) => {
         </View>:
         <Container>
             <CondRow>
-                <CondText>{user?.condominium?.name||""}</CondText>
+                <CondText>{condominium?.name||""}</CondText>
             </CondRow>
             <FlatList onRefresh={() => setRefresh(true)} 
                 refreshing={refresh}    

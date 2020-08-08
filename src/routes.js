@@ -15,6 +15,7 @@ import { Dwellers } from './screens/Dwellers';
 import { NewDweller } from './screens/NewDweller';
 import { UpdatePassword } from './screens/UpdatePassword';
 import { PostDetail } from './screens/PostDetail';
+import { NewPost } from './screens/NewPost';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -45,6 +46,11 @@ export const PostStack = createStackNavigator({
         }},
     AlertsDetail: {
         screen: PostDetail,
+        navigationOptions:{
+            headerShown: false
+        }},
+    NewAlert: {
+        screen: NewPost,
         navigationOptions:{
             headerShown: false
         }}
@@ -119,12 +125,10 @@ const LoggedInAsUser = createDrawerNavigator({
 
 export const createRootNavigator = (signedIn = false, userType, firstLogin=false) => {
     let initialRouteName = '';
-    console.log(`firstLogin: ${firstLogin}`);
+    console.log(`firstLogin: ${firstLogin} userType: ${userType}`);
     if (signedIn === false) initialRouteName = 'LoggedOut';
     else {
         if(firstLogin === true) initialRouteName = 'UpdatePassword';
-        else if (userType === 'root') initialRouteName = 'LoggedInAsRoot';
-        else if (userType === 'admin') initialRouteName = 'LoggedInAsAdmin';
         else initialRouteName = 'LoggedInAsUser';
     }
     

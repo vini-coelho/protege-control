@@ -11,15 +11,12 @@ import { onSignOut } from '../auth';
 export default CustomDrawerContentComponent = props => {
 
     const [ user, setUser ] = useState(null);
-    const [ cond, setCond ] = useState(null);
 
     useEffect(() => {
         async function getUser() {
             const user = JSON.parse(await AsyncStorage.getItem('USER'));
-            const cond = JSON.parse(await AsyncStorage.getItem('USER_COND'));
 
             setUser(user);
-            setCond(cond);
         }
 
         getUser();
@@ -41,7 +38,7 @@ export default CustomDrawerContentComponent = props => {
     }
 
     return (
-        (user && cond) &&
+        (user) &&
             <ScrollView>
                 <SafeAreaView
                     style={styles.container}
