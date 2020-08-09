@@ -12,10 +12,9 @@ export const SubmitButton = styled.TouchableOpacity`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 20%;
-    height: 30px;
+    padding: 8px 15px;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 10px;
     align-self:center;
 `;
 
