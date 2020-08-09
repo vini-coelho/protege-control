@@ -7,7 +7,6 @@ export const FilterContainer = styled.View`
     justify-content: space-between;
     align-items: center;
     margin: 10px 20px;
-    elevation: 3;
 `;
 
 export const FilterButton = styled.TouchableOpacity`
