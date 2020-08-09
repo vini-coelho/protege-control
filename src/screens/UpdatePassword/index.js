@@ -18,6 +18,7 @@ import Colors from '../../styles/Colors';
   async function onSubmit(){
       if(password == newPassword){
         Alert.alert('senhas devem ser diferentes')
+        return;
       }
       setLoading(true)
       
@@ -45,9 +46,9 @@ import Colors from '../../styles/Colors';
         <Scroll>
             <ContainerForm>
                 <LabelText>Senha atual</LabelText>
-                <Input onChangeText={value => setPassword(value)}></Input>
+                <Input onChangeText={value => setPassword(value)} secureTextEntry></Input>
                 <LabelText>Nova senha</LabelText>
-                <Input onChangeText={value => setNewPassword(value)}></Input>
+                <Input onChangeText={value => setNewPassword(value)} secureTextEntry></Input>
 
                 <SubmitButton onPress={onSubmit}>
                     <ButtonText>Salvar</ButtonText>
