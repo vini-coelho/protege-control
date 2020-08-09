@@ -6,9 +6,12 @@ import { Container, ContainerForm, LabelText, Input, SubmitButton, ButtonText } 
 import Header from '../../components/Header';
 import { getUser } from '../../auth';
 import api from '../../services/api';
+import { AuthenticateModal } from '../../components/AuthenticateModal';
 
 const NewCheckIn = ({navigation}) => {
     const {attendance, handleOnNavigateBack} = navigation.state.params;
+
+    const [authVisible, setAuthVisible] = useState(false)
 
     const [date] = useState(new Date())
     const [name, setName] = useState('')
@@ -20,14 +23,23 @@ const NewCheckIn = ({navigation}) => {
         }
         setupUser()
     },[])
-    const onSubmit = async () => {
-        if (!!attendance) {
-            update()
+    const onSubmit = async (password) => {
+
+        const {isPasswordValid} = await api.post('/validate', {password})
+        .then(res=>res.data)
+        .catch(err=> Alert.alert('Erro', 'falha ao autenticar'))
+        if(isPasswordValid) {
+            if (!!attendance) {
+                update()
+            } else {
+                save()
+            }
+            Alert.alert("Sucesso","Atualização realizada com sucesso!")
+            handleOnNavigateBack()
+            navigation.navigate('CheckIn')
         } else {
-            save()
+            Alert.alert("Falha", "Senha inválida!")
         }
-        handleOnNavigateBack()
-        navigation.navigate('CheckIn')
     } 
 
     const save = async () => {
@@ -61,6 +73,11 @@ const NewCheckIn = ({navigation}) => {
 
   return (
       <Container>
+        <AuthenticateModal 
+            visible={authVisible}
+            onRequestClose={() => setAuthVisible(false)}
+            closeModal={() => setAuthVisible(false)}
+            onSubmit={(password) => onSubmit(password)}/>
           <Header             
             iconLeft='arrow-back' 
             onPressLeft={() => navigation.goBack()}
@@ -73,7 +90,7 @@ const NewCheckIn = ({navigation}) => {
                 <LabelText>Data</LabelText>
                 <Input>{getFormatedDate()}</Input>
             </ContainerForm>
-            <SubmitButton onPress={onSubmit}>
+            <SubmitButton onPress={()=>setAuthVisible(true)}>
                 <ButtonText>Confirmar {!!attendance?'Check-out':'Check-in'}</ButtonText>
             </SubmitButton>
       </Container>
