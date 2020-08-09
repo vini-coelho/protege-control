@@ -10,7 +10,7 @@ import {
     Alert
 } from 'react-native';
 
-import { logIn, setUser, setCond } from '../../auth';
+import { logIn, setUser, setCond, getDecriptedToken } from '../../auth';
 
 import Logo from '../../assets/images/logo.png'
 import Colors from '../../styles/Colors';
@@ -29,11 +29,13 @@ export default ({ navigation }) => {
         const success = await logIn(email, password).catch(err => handleError());
 
         if (success.status ==200) {
-            const { data: user } = await api.get('/showuser'); 
-
+            const { data: user } = await api.get('/showuser');
+            const userInfo = await getDecriptedToken() 
+            console.log(userInfo);
             setUser(user);
             setLoading(false);
-            if(user?.type == ADMIN) navigation.navigate('LoggedInAsAdmin'); 
+            if(user?.type == ADMIN) navigation.navigate('LoggedInAsAdmin');
+            else if(userInfo.data.isFirstLogin) navigation.navigate('UpdatePassword'); 
             else navigation.navigate('LoggedInAsUser');
         } else { handleError() }
         
