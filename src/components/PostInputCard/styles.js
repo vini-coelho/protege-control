@@ -43,6 +43,8 @@ export const Info = styled.View`
 export const DateText = styled.Text`
     font-family: 'Roboto';
     color: ${Colors.yellow};
+    font-size: 10px;
+    max-width: 50%;
 `;
 
 export const SenderWrapper = styled.View`
@@ -57,7 +59,7 @@ export const Sender = styled.Text`
 
 export const Button = styled.TouchableOpacity`
     align-self: center;
-    background-color: ${props => !props.isSelected ? Colors.yellow: Colors.white};
+    background-color: ${props => props.isSelected ? Colors.yellow: Colors.white};
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 17px;
@@ -68,7 +70,7 @@ export const Button = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
     font-family: 'Roboto-Bold';
     font-size: 15px;
-    color: ${props => props.isSelected ? Colors.yellow: Colors.white};
+    color: ${props => !props.isSelected ? Colors.yellow: Colors.white};
 `;
 
 export const ButtonRow = styled.View`

@@ -50,7 +50,7 @@ const PostInputCard = ({ title, description,senderName, date, image=null, onImag
                     <ButtonText isSelected={isImageSelected}>Imagem</ButtonText>
             </Button>
         </ButtonRow>
-        {isImageSelected?
+        {!isImageSelected?
         <MessageInput
         onChangeText={text => onTextChange(text)}
         multiline={true}
@@ -59,14 +59,14 @@ const PostInputCard = ({ title, description,senderName, date, image=null, onImag
         :<PostImageInput image={image} onClick={onImageClick}></PostImageInput>}
         <ButtonRow>
             <Button 
-             isSelected={true}
+             isSelected={false}
              onPress={onCancelClick}>
-                <ButtonText isSelected={true}>Cancelar</ButtonText>
+                <ButtonText isSelected={false}>Cancelar</ButtonText>
             </Button>
             <Button
-             isSelected={false}
+             isSelected={true}
              onPress={onSaveClick}>
-                <ButtonText isSelected={false}>Salvar</ButtonText>
+                <ButtonText isSelected={true}>Salvar</ButtonText>
             </Button>
         </ButtonRow>
       </Body>

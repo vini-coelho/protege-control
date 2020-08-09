@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     date: {
         color: Colors.yellow,
         fontFamily: 'Roboto',
+        maxWidth: '50%',
+        fontSize: 10,
+        flex: 1,
+        alignSelf: 'flex-end'
     },
     iconsContainer: {
         flexDirection: 'row',
