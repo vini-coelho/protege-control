@@ -44,6 +44,9 @@ const CheckIn = ({navigation}) => {
         return dateFormated.split(' ')[1]
     }
 
+    const formatName = (name) => {
+        return name.split(" ")[0]
+    }
   return (
         <>
         <StatusBar barStyle='dark-content' backgroundColor={Colors.main}/>
@@ -84,7 +87,7 @@ const CheckIn = ({navigation}) => {
 
                         <RowContainer>
                             <TextWrapper width={`35%`}>
-                                <VisitorText >{item.user.name}</VisitorText>
+                                <VisitorText >{formatName(item.user.name)}</VisitorText>
                             </TextWrapper>
                         <TextWrapper width={`25%`}>
                                 <VisitorText>{formatDate(item.arrived_at)}</VisitorText>

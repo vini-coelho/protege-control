@@ -22,7 +22,9 @@ export default CustomDrawerContentComponent = props => {
         getUser();
     }, []);
 
-
+    const formatName = (name) => {
+        return name.split(" ")[0]
+    }
     function mapUserType(type){
         switch (type) {
             case "user":
@@ -50,7 +52,7 @@ export default CustomDrawerContentComponent = props => {
                         <View style={styles.profile}>
                             <View style={styles.profilePic}></View>
                             <View style={styles.info}>
-                                <Text style={styles.name}>{user.name}</Text>
+                                <Text style={styles.name}>{formatName(user.name)}</Text>
                                 <Text style={styles.place}>{mapUserType(user.type)}</Text>
                             </View>
                         </View>
