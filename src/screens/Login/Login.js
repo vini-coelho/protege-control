@@ -15,6 +15,7 @@ import { logIn, setUser, setCond } from '../../auth';
 import Logo from '../../assets/images/logo.png'
 import Colors from '../../styles/Colors';
 import api from '../../services/api';
+import { ADMIN } from '../../utils/UserTypes';
 
 export default ({ navigation }) => {
 
@@ -32,7 +33,8 @@ export default ({ navigation }) => {
 
             setUser(user);
             setLoading(false);
-            navigation.navigate('LoggedInAsUser');
+            if(user?.type == ADMIN) navigation.navigate('LoggedInAsAdmin'); 
+            else navigation.navigate('LoggedInAsUser');
         } else { handleError() }
         
     }

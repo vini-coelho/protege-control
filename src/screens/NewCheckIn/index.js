@@ -46,7 +46,6 @@ const NewCheckIn = ({navigation}) => {
         const data = {
             arrived_at: moment(date).utc().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]")
         }
-        console.log(data);
         await api.post('/attendance',data).catch(err=>Alert.alert('Error', "não foi possivel registrar!"))
     }
 
@@ -55,7 +54,6 @@ const NewCheckIn = ({navigation}) => {
             id: attendance.id,
             left_at: moment(date).utc().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]")
         }
-        console.log(data);
         await api.post('/attendance',data).catch(err=>Alert.alert('Error', "não foi possivel registrar!"))
     }
 

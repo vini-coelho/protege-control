@@ -6,6 +6,8 @@ import Header from '../../components/Header';
 import { USER } from '../../utils/UserTypes';
 import api from '../../services/api';
 import Colors from '../../styles/Colors';
+import { AlertCard } from '../../components/AlertCard';
+import { AlertRow } from '../CheckIn/styles';
 
 
 const NewDweller = ({navigation}) => {
@@ -22,7 +24,7 @@ const NewDweller = ({navigation}) => {
     const [email, setEmail] = useState('')
     // const [password, setPassword] = useState('')
     // const [confirmPassword, setConfirmPassword] = useState('')
-
+    const alertText = "Lembre-se de avisar ao morador a necessidade de redefinir a senha durante o primeiro acesso."
     function setupLabel (condType){
         switch (condType) {
             case "blocks":
@@ -62,7 +64,6 @@ const NewDweller = ({navigation}) => {
     async function onSubmit() {
         setLoading(true)
         const data = setupData()
-        console.log(data);
        
         await api.post('/register', data)
         .then(res =>{
@@ -93,6 +94,9 @@ const NewDweller = ({navigation}) => {
             <ActivityIndicator color={Colors.yellow} size='large' />
         </View>:
         <Scroll>
+            <AlertRow>
+                    <AlertCard text={alertText}></AlertCard>
+            </AlertRow>
             <ContainerForm>
                 <LabelText>Nome</LabelText>
                 <Input onChangeText={value => setName(value)}></Input>

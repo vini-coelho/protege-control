@@ -23,6 +23,7 @@ import HomeNotification from '../../components/HomeNotification';
 import { ROOT } from '../../utils/UserTypes';
 import { ScrollView } from 'react-native-gesture-handler';
 import api from '../../services/api';
+import ListModal from '../../components/ListModal';
 
 
 export default ({ navigation }) => {
@@ -30,7 +31,9 @@ export default ({ navigation }) => {
 	const [user,setUser] = useState(null)
 	const [number, setNumber] = useState(0)
 	const [condominium, setCondominium] = useState(null)
+	const [condominiumList, setCondominiumList] = useState([])
 
+	const [condVisible, setCondVisible] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const listData = [
 		{ id: Math.random().toString(),
@@ -79,6 +82,7 @@ export default ({ navigation }) => {
 		else listConds().then(data=> {
 			setCond(data[0])
 			setCondominium(data[0])
+			setCondominiumList(data)
 		})
 	}
 
@@ -95,6 +99,13 @@ export default ({ navigation }) => {
 
 	return (
 		<>
+			<ListModal
+			visible={condVisible}
+			onRequestClose={()=>setCondVisible(false)}
+			closeModal={()=>setCondVisible(false)}
+			itemList={condominiumList}
+			onItemClick={item=>setupCond(item)}
+			/>
 				<ScrollView style={{ flex: 1, backgroundColor: Colors.main }}>
 
 					<HomeHeader onPressLeft={() => navigation.openDrawer()}
@@ -133,7 +144,7 @@ export default ({ navigation }) => {
 						<LineView/>
 						<CondominumAddressText>{formatAddress()}</CondominumAddressText>
 						{user?.type == ROOT &&
-							<ChangeCondominiumButton onPress={()=>{}}><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>}
+							<ChangeCondominiumButton onPress={()=>setCondVisible(true)}><ButtonText>Alterar</ButtonText></ChangeCondominiumButton>}
 					</CondominumContainer>
 				}
 			</ScrollView>

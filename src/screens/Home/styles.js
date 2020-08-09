@@ -14,10 +14,12 @@ export const  CondominumContainer = styled.View`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0 20px;
 `;
 
 export const CondominumNameText = styled.Text`
     font-family: "Roboto-Bold";
+    text-align: center;
     font-size: 18px;
     color: ${Colors.white};
 `;
@@ -59,6 +61,7 @@ export const ChangeCondominiumButton = styled.TouchableOpacity`
     height: 30px;
     align-items: center;
     border-radius: 15px;
+    margin-bottom: 25px;
 `;
 
 export const ButtonText = styled.Text`

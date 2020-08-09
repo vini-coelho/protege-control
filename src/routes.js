@@ -18,6 +18,7 @@ import { PostDetail } from './screens/PostDetail';
 import { NewPost } from './screens/NewPost';
 import { CheckIn } from './screens/CheckIn';
 import { NewCheckIn } from './screens/NewCheckIn';
+import { ADMIN } from './utils/UserTypes';
 
 export const VisitorStack = createStackNavigator({
     Visitors:  {
@@ -72,7 +73,7 @@ export const CheckInStack = createStackNavigator({
 })
 
 
-const LoggedInAsUser = createDrawerNavigator({
+const LoggedInAsAdmin = createDrawerNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
@@ -112,15 +113,56 @@ const LoggedInAsUser = createDrawerNavigator({
             drawerIcon: ({ tintColor }) => 
             <Icon name='directions-walk' size={25} color={tintColor}/>
         }
+    }
+}, {
+    initialRouteName: 'Home',
+    contentComponent: CustomDrawer,
+    drawerBackgroundColor: Colors.white,
+    contentOptions: {
+        labelStyle: {
+            fontFamily: 'Roboto',
+            fontWeight: 'normal',
+            fontSize: 17
+        },
+        inactiveTintColor: Colors.dark,
+        inactiveBackgroundColor: Colors.white,
+        activeTintColor: Colors.dark,
+        activeBackgroundColor: Colors.white
+    }
+});
+const LoggedInAsUser = createDrawerNavigator({
+    Home: {
+        screen: Home,
+        navigationOptions: {
+            title: 'Página Inicial',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='home' size={25} color={tintColor}/>
+        }
     },
-    // CheckOut: {
-    //     screen: Visitors,
-    //     navigationOptions: {
-    //         title: 'Check-Out',
-    //         drawerIcon: ({ tintColor }) => 
-    //         <Icon name='directions-walk' size={25} color={tintColor}/>
-    //     }
-    // },
+    Alerts: {
+        screen: PostStack,
+        navigationOptions: {
+            title: 'Avisos',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='notifications' size={25} color={tintColor}/>
+        }
+    },
+    Dwellers: {
+        screen: DwellerStack,
+        navigationOptions: {
+            title: 'Moradores',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='person' size={25} color={tintColor}/>
+        }
+    },
+    Visitors: {
+        screen: VisitorStack,
+        navigationOptions: {
+            title: 'Visitantes',
+            drawerIcon: ({ tintColor }) => 
+            <Icon name='directions-walk' size={25} color={tintColor}/>
+        }
+    },
 }, {
     initialRouteName: 'Home',
     contentComponent: CustomDrawer,
@@ -138,19 +180,18 @@ const LoggedInAsUser = createDrawerNavigator({
     }
 });
 
-
 export const createRootNavigator = (signedIn = false, userType, firstLogin=false) => {
     let initialRouteName = '';
-    console.log(`firstLogin: ${firstLogin} userType: ${userType}`);
     if (signedIn === false) initialRouteName = 'LoggedOut';
     else {
         if(firstLogin === true) initialRouteName = 'UpdatePassword';
+        else if (userType == ADMIN) initialRouteName = 'LoggedInAsAdmin'
         else initialRouteName = 'LoggedInAsUser';
     }
     
     const mainRoute = createSwitchNavigator({
-        // LoggedInAsAdmin,
         // LoggedInAsRoot,
+        LoggedInAsAdmin,
         LoggedInAsUser,
         LoggedOut: Login,
         UpdatePassword: UpdatePassword

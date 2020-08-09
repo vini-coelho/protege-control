@@ -5,6 +5,7 @@ import { getUser, isLoggedIn, getDecriptedToken  } from './auth';
 import { createRootNavigator } from './routes';
 
 import Colors from './styles/Colors';
+import { ADMIN } from './utils/UserTypes';
 
 export default () => {
     const [ loggedIn, setLoggedIn ] = useState(false);
@@ -18,13 +19,15 @@ export default () => {
             setLoggedIn(await isLoggedIn());
             const userInfo = await getDecriptedToken()
             if(userInfo) {
+                console.log(userInfo.data.role);
+                if(userInfo.data.role == 'LocalAdmin') setUserType(ADMIN); 
                 setFirstLogin(userInfo?.data?.isFirstLogin)
-                console.log(`userInfo: ${userInfo?.data?.isFirstLogin}`);
             }
             if (loggedIn) 
             {
                 const user = await getUser();
                 setUserType(user.type);
+                console.log(user.type);
             }
 
             setLoading(false);

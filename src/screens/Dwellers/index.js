@@ -18,26 +18,14 @@ const Dwellers = ({navigation}) => {
 	const [condominium, setCondominium] = useState(null)
     const [dwellers, setDwellers] = useState([])
 
-    const data = [
-        {id: 1, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 2, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 3, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 4, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 5, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 6, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 7, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 8, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 9, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 10, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-        {id: 11, name: "Carlos Andrade", tower: "Predio 10", apartment: "Apartamento 5" },
-    ]
 
     useEffect(()=>{
         const findUser= async () => {
-			const _user = await getUser()
+            const _user = await getUser()
+            const cond = await getCond()
             setUser(_user)
-            setupCond(_user?.condominium)
-            listDewllers(_user?.condominium)
+            setupCond(cond)
+            listDewllers(cond)
 		}
         findUser()
     },[])

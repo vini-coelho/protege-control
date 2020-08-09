@@ -17,7 +17,7 @@ const CheckIn = ({navigation}) => {
     
     const [data, setData] = useState([])
     const [attendance, setAttendance] = useState(null)
-
+    const alertText = "Todos os horários são baseados no fuso horário local"
     useEffect(()=>{
         setRefresh(false)
         setLoading(true)
@@ -28,7 +28,6 @@ const CheckIn = ({navigation}) => {
         }
         const getAttendance = async () => {
             const attendances = await api.get('/attendance').then(res=>res.data)
-            console.log(attendances);
             setData(attendances)
              getOpenAttendance()
          }
@@ -61,7 +60,7 @@ const CheckIn = ({navigation}) => {
                 </View>
                 : <>
                 <AlertRow>
-                    <AlertCard></AlertCard>
+                    <AlertCard text={alertText}></AlertCard>
                 </AlertRow>
                     <ListHeaderContainer>
                         <RowContainer>

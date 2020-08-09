@@ -3,6 +3,7 @@ import Colors from '../../styles/Colors';
 
 export const Container = styled.View`
   height: 100%;
+  flex: 1;
 `;
 
 export const FAB = styled.TouchableOpacity`
@@ -13,7 +14,7 @@ export const FAB = styled.TouchableOpacity`
     align-items:center;
     background-color: ${Colors.main};
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
     right: 16px;
     z-index:100;
 `;

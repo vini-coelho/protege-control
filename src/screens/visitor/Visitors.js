@@ -20,7 +20,7 @@ import NewVisitor from '../NewVisitor/NewVisitor';
 import Header from '../../components/Header';
 import VisitorCard from '../../components/VisitorCard';
 import { FilterButton, ButtonText, FilterContainer, RowContainer, VisitorText, TextWrapper, ListHeaderText,ListHeaderContainer } from './styles';
-import { getUser } from '../../auth';
+import { getUser, getCond } from '../../auth';
 
 export default ({ navigation }) => {
 
@@ -53,7 +53,8 @@ export default ({ navigation }) => {
             setRefresh(false);
             setLoading(true);
             try{
-                const response = await api.get(`/visitorbycond`);
+                const {id: cond_id} = await getCond()
+                const response = await api.get(`/visitorbycond/${cond_id}`);
                 setVisitors(response.data.filter(visitor => visitor.type == filterSelected));
                 _setVisitors(response.data)
             }
@@ -69,7 +70,6 @@ export default ({ navigation }) => {
     const storeVisitor = async data => {
         setLoading(true);
         try {
-            console.log(data);
             await api.post('/visitors', data)
             .then(() => {
                 setLoading(false);
@@ -85,9 +85,9 @@ export default ({ navigation }) => {
 
     const listDewllers = async () => {
         setLoading(true);
-        const user = await getUser()
+        const {id: cond_id} = await getCond()
         try {
-            return await api.get(`/getDewllers/${user.cond_id}`)
+            return await api.get(`/getDewllers/${cond_id}`)
             .then((res) => {
                 setLoading(false);
                 return res.data;

@@ -99,7 +99,6 @@ const NewPost = ({navigation, route}) => {
       status: item?.sender?.type,
       key: image?.key || null
     }
-    console.log(data);
     api.post('/posts', data)
     .then(res=>console.log(res.data))
     .catch(err=>Alert.alert("Erro", "Ocorreu um erro ao publicar resposta"));

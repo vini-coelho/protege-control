@@ -50,11 +50,11 @@ export const TextWrapper = styled.View`
 export const ListHeaderText = styled.Text`
     font-size: 13px;
     font-family: "Roboto-Bold";
-    color: ${Colors.main}
+    color: ${Colors.main};
 `;
 
 export const VisitorText = styled.Text`
     font-size: 13px;
     font-family: "Roboto";
-    color: ${Colors.main}
+    color: ${Colors.main};
 `;
