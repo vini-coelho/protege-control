@@ -43,7 +43,7 @@ export const RowContainer = styled.View`
 
 export const TextWrapper = styled.View`
     width: ${props => props.width};
-    max-height: 15px;
+    max-height: 17px;
     overflow: hidden;
     align-self: center;
 `;

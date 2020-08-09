@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, StatusBar, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StatusBar, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import Header from '../../components/Header';
 import { ListHeaderContainer, RowContainer, ListHeaderText, VisitorText, TextWrapper } from '../visitor/styles';
 import Colors from '../../styles/Colors';
 import { Button, ButtonText } from '../../components/PostInputCard/styles';
 import { AlertCard } from '../../components/AlertCard';
+import api from '../../services/api';
+import moment from 'moment';
 
 import { AlertRow } from './styles';
 
@@ -13,11 +15,36 @@ const CheckIn = ({navigation}) => {
     const [loading, setLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
     
-    const data = [
-        {id: 1, name: 'Patricia souza'},
-        {id: 2, name: 'Patricia souza'},
-        {id: 3, name: 'Patricia souza'},
-    ]
+    const [data, setData] = useState([])
+    const [attendance, setAttendance] = useState(null)
+
+    useEffect(()=>{
+        setRefresh(false)
+        setLoading(true)
+        const getOpenAttendance = async () => {
+            const _attendance = await api.get('/getOpenAttendance').then(res=>res.data)
+            setAttendance(_attendance)
+            setLoading(false)
+        }
+        const getAttendance = async () => {
+            const attendances = await api.get('/attendance').then(res=>res.data)
+            console.log(attendances);
+            setData(attendances)
+             getOpenAttendance()
+         }
+        getAttendance()
+    }, [refresh])
+
+    const formatDate = (date) => {
+        const dateFormated = moment(date).local().format('YYYY-MM-DD HH:mm:ss');
+        return dateFormated.split(' ')[0]
+    }
+
+    const formatHour = (date) => {
+        const dateFormated = moment(date).local().format('YYYY-MM-DD HH:mm:ss');
+        return dateFormated.split(' ')[1]
+    }
+
   return (
         <>
         <StatusBar barStyle='dark-content' backgroundColor={Colors.main}/>
@@ -38,10 +65,10 @@ const CheckIn = ({navigation}) => {
                 </AlertRow>
                     <ListHeaderContainer>
                         <RowContainer>
-                                <TextWrapper width={`32%`}>
+                                <TextWrapper width={`35%`}>
                                     <ListHeaderText >Nome</ListHeaderText>
                                 </TextWrapper>
-                                <TextWrapper width={`15%`}>
+                                <TextWrapper width={`25%`}>
                                     <ListHeaderText>Dia</ListHeaderText>
                                 </TextWrapper>
                                 <TextWrapper width={`25%`}>
@@ -57,19 +84,19 @@ const CheckIn = ({navigation}) => {
                     renderItem={({ item }) => (
 
                         <RowContainer>
-                            <TextWrapper width={`32%`}>
-                                <VisitorText >{item.name}</VisitorText>
+                            <TextWrapper width={`35%`}>
+                                <VisitorText >{item.user.name}</VisitorText>
                             </TextWrapper>
-                        <TextWrapper width={`15%`}>
-                                <VisitorText>25-08-2020</VisitorText>
+                        <TextWrapper width={`25%`}>
+                                <VisitorText>{formatDate(item.arrived_at)}</VisitorText>
                         </TextWrapper>
                             <TextWrapper width={`25%`}>
-                                <VisitorText>18:55</VisitorText>
+                                <VisitorText>{formatHour(item.arrived_at)}</VisitorText>
                             </TextWrapper>
                         </RowContainer>
                     )}/>
-                    <Button onPress={()=>navigation.navigate('NewCheckIn')}>
-                        <ButtonText>Realizar check-in</ButtonText>
+                    <Button onPress={()=>navigation.navigate('NewCheckIn',{attendance, handleOnNavigateBack :()=>setRefresh(true)})}>
+                        <ButtonText>Realizar {!!attendance?'Check-out':'Check-in'}</ButtonText>
                     </Button>
                 </>
             }
