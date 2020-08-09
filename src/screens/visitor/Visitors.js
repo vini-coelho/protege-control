@@ -130,13 +130,13 @@ export default ({ navigation }) => {
                         </FilterContainer>
                         <ListHeaderContainer>
                             <RowContainer>
-                                    <TextWrapper width={`32%`}>
+                                    <TextWrapper width={`35%`}>
                                         <ListHeaderText >Nome</ListHeaderText>
                                     </TextWrapper>
-                                    <TextWrapper width={`15%`}>
+                                    <TextWrapper width={`25%`}>
                                         <ListHeaderText>AP/CS</ListHeaderText>
                                     </TextWrapper>
-                                    <TextWrapper width={`25%`}>
+                                    <TextWrapper width={`35%`}>
                                         <ListHeaderText>Responsável</ListHeaderText>
                                     </TextWrapper>
                             </RowContainer>
@@ -149,14 +149,14 @@ export default ({ navigation }) => {
                         renderItem={({ item }) => (
 
                             <RowContainer>
-                                <TextWrapper width={`32%`}>
+                                <TextWrapper width={`35%`}>
                                     <VisitorText >{item.name}</VisitorText>
                                 </TextWrapper>
-                               <TextWrapper width={`15%`}>
+                               <TextWrapper width={`25%`}>
                                { (!!item.user.tower || !!item.user.apartment) && 
                                     <VisitorText>{`${item.user.tower}/${item.user.apartment}`}</VisitorText>
                                }</TextWrapper>
-                                <TextWrapper width={`25%`}>
+                                <TextWrapper width={`35%`}>
                                     <VisitorText>{item.user.name}</VisitorText>
                                 </TextWrapper>
                             </RowContainer>
