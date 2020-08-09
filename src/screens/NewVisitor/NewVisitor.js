@@ -73,16 +73,18 @@ export default props => {
         clearStates()
         props.closeModal();
         const hosted_by = user?.type != USER ? responsible.id : undefined
-
-        await props.onSubmit({
+        const data = {
             name,
             doc,
+            cond_id: props.cond_id,
             date: moment(date).utc().format("YYYY-MM-DD[T]HH:mm:ss.SSS[Z]"),
             type,
             comments,
             hosted_by,
             car
-        }).catch(err => { throw err; })
+        }
+        console.log(data);
+        await props.onSubmit(data).catch(err => { throw err; })
     }
 
     return(

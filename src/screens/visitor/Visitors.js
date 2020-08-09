@@ -20,7 +20,8 @@ import NewVisitor from '../NewVisitor/NewVisitor';
 import Header from '../../components/Header';
 import VisitorCard from '../../components/VisitorCard';
 import { FilterButton, ButtonText, FilterContainer, RowContainer, VisitorText, TextWrapper, ListHeaderText,ListHeaderContainer } from './styles';
-import { getUser, getCond } from '../../auth';
+import { getUser, getCond, setCond } from '../../auth';
+import { cond } from 'react-native-reanimated';
 
 export default ({ navigation }) => {
 
@@ -30,7 +31,7 @@ export default ({ navigation }) => {
     const [ newVisitorVisible, setNewVisitorVisible ] = useState(false);
     const [ refresh, setRefresh ] = useState(false);
     const [filterSelected, setFilterSelected] = useState("visitor")
-  
+    const [condId, setCondId] = useState(null)
     function onFilterClick(type) {
         setFilterSelected(type!=filterSelected? type : filterSelected)
     }
@@ -86,6 +87,7 @@ export default ({ navigation }) => {
     const listDewllers = async () => {
         setLoading(true);
         const {id: cond_id} = await getCond()
+        setCondId(cond_id)
         try {
             return await api.get(`/getDewllers/${cond_id}`)
             .then((res) => {
@@ -106,7 +108,8 @@ export default ({ navigation }) => {
             onRequestClose={() => setNewVisitorVisible(false)}
             closeModal={() => setNewVisitorVisible(false)}
             onSubmit={storeVisitor}
-            listDewllers={listDewllers}/>
+            listDewllers={listDewllers}
+            cond_id={condId}/>
 
             <View style={styles.container}>
                 <Header iconRight='add'

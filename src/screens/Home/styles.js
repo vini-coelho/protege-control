@@ -5,7 +5,7 @@ export const MenuContainer = styled.View`
     flex-direction: row;
     justify-content: space-around;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 
 `;
 
@@ -15,6 +15,7 @@ export const  CondominumContainer = styled.View`
     justify-content: center;
     align-items: center;
     padding: 0 20px;
+    margin-bottom: 25px;
 `;
 
 export const CondominumNameText = styled.Text`
@@ -44,6 +45,7 @@ export const NotificationRow = styled.View`
     flex-direction: row;
     padding-right: 30px;
     justify-content: flex-end;
+    margin-bottom: 10px;
 `;
 
 export const ItemView = styled.View`
@@ -52,16 +54,15 @@ export const ItemView = styled.View`
 `;
 
 export const ChangeCondominiumButton = styled.TouchableOpacity`
-    margin-top: 30px;
+   margin-top: 30px;
     background-color: ${Colors.yellow};
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 20%;
-    height: 30px;
+    padding: 5px 15px;
     align-items: center;
-    border-radius: 15px;
-    margin-bottom: 25px;
+    border-radius: 10px;
+    align-self:center;
 `;
 
 export const ButtonText = styled.Text`
