@@ -16,7 +16,7 @@
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
     "@tradle/react-native-http": "^2.0.0",
     "aws-sdk": "^2.728.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "base64-arraybuffer": "^0.2.0",
     "https-browserify": "0.0.1",
     "jwt-decode": "^2.2.0",
